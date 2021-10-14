@@ -1,2 +1,7 @@
 /target
 Cargo.lock
+
+.calcit-error.cirru
+.compact-inc.cirru
+
+dylibs/*
