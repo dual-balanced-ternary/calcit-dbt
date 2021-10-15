@@ -119,7 +119,7 @@ pub fn dbt_mul(args: Vec<Edn>) -> Result<Edn, String> {
       (Edn::Buffer(buf1), Edn::Buffer(buf2)) => {
         let v1 = DualBalancedTernary::from_buffer(buf1)?;
         let v2 = DualBalancedTernary::from_buffer(buf2)?;
-        Ok(Edn::Buffer((v1 * v2).strip_empty_tails().to_buffer()?))
+        Ok(Edn::Buffer((v1 * v2).to_buffer()?))
       }
       (a, b) => Err(format!("dbt-mul expected 2 buffers, got: {} {}", a, b)),
     }
