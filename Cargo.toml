@@ -12,5 +12,5 @@ crate-type = ["dylib", "rlib"] # Creates dynamic lib
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dual_balanced_ternary = "0.1.0-a4"
-cirru_edn = "0.2.1"
+dual_balanced_ternary = "0.1.0-a5"
+cirru_edn = "0.2.2"
