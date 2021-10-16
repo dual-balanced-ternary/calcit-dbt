@@ -1017,6 +1017,27 @@
             :by |u0
           |main! $ {}
             :data $ {}
+              |yD $ {}
+                :data $ {}
+                  |T $ {} (:text |println) (:type :leaf) (:at 1634158319303) (:by |u0)
+                  |j $ {}
+                    :data $ {}
+                      |T $ {} (:text |dbt:format) (:type :leaf) (:at 1634158324403) (:by |u0)
+                      |j $ {}
+                        :data $ {}
+                          |T $ {} (:text |dbt:add) (:type :leaf) (:at 1634158327762) (:by |u0)
+                          |j $ {} (:text "|`dbt`6") (:type :leaf) (:at 1634275394145) (:by |u0)
+                          |r $ {} (:text "|`dbt`6") (:type :leaf) (:at 1634275392555) (:by |u0)
+                        :type :expr
+                        :at 1634158324749
+                        :by |u0
+                      |r $ {} (:text "|+ 1 2 3") (:type :leaf) (:at 1634273306515) (:by |u0)
+                    :type :expr
+                    :at 1634158319815
+                    :by |u0
+                :type :expr
+                :at 1634158317851
+                :by |u0
               |yT $ {}
                 :data $ {}
                   |T $ {} (:text |println) (:type :leaf) (:at 1634158319303) (:by |u0)
