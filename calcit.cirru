@@ -1,6 +1,6 @@
 
 {}
-  :configs $ {} (:reload-fn |dbt.main/reload!) (:port 6001) (:version |0.0.2)
+  :configs $ {} (:reload-fn |dbt.main/reload!) (:port 6001) (:version |0.0.3)
     :modules $ []
     :init-fn |dbt.main/main!
   :ir $ {} (:package |dbt)
@@ -178,6 +178,38 @@
                 :by |u0
             :type :expr
             :at 1634156175047
+            :by |u0
+          |dbt:from-digit $ {}
+            :data $ {}
+              |T $ {} (:text |defn) (:type :leaf) (:at 1634367143327) (:by |u0)
+              |j $ {} (:text |dbt:from-digit) (:type :leaf) (:at 1634367143327) (:by |u0)
+              |r $ {}
+                :data $ {}
+                  |T $ {} (:type :leaf) (:by |u0) (:at 1634367144674) (:text |x)
+                :type :expr
+                :at 1634367144674
+                :by |u0
+              |v $ {}
+                :data $ {}
+                  |T $ {} (:type :leaf) (:by |u0) (:at 1634367144674) (:text |&call-dylib-edn)
+                  |j $ {} (:type :expr) (:by |u0) (:at 1634367144674)
+                    :data $ {}
+                      |T $ {} (:type :leaf) (:by |u0) (:at 1634367144674) (:text |str)
+                      |j $ {} (:type :expr) (:by |u0) (:at 1634367144674)
+                        :data $ {}
+                          |T $ {} (:type :leaf) (:by |u0) (:at 1634367144674) (:text |or-current-path)
+                          |j $ {} (:type :leaf) (:by |u0) (:at 1634367144674) (:text |calcit-dirname)
+                      |r $ {} (:type :leaf) (:by |u0) (:at 1634367144674) (:text |lib-path)
+                      |v $ {} (:type :expr) (:by |u0) (:at 1634367144674)
+                        :data $ {}
+                          |T $ {} (:type :leaf) (:by |u0) (:at 1634367144674) (:text |get-dylib-ext)
+                  |r $ {} (:text "|\"dbt_from_digit") (:type :leaf) (:at 1634367156388) (:by |u0)
+                  |v $ {} (:type :leaf) (:by |u0) (:at 1634367144674) (:text |x)
+                :type :expr
+                :at 1634367144674
+                :by |u0
+            :type :expr
+            :at 1634367143327
             :by |u0
           |dbt:from-float $ {}
             :data $ {}
@@ -454,20 +486,29 @@
                 :by |u0
               |v $ {}
                 :data $ {}
-                  |T $ {} (:type :leaf) (:by |u0) (:at 1634366036091) (:text |&call-dylib-edn)
-                  |j $ {} (:type :expr) (:by |u0) (:at 1634366036091)
+                  |T $ {} (:text |&call-dylib-edn) (:type :leaf) (:at 1634366036091) (:by |u0)
+                  |j $ {}
                     :data $ {}
-                      |T $ {} (:type :leaf) (:by |u0) (:at 1634366036091) (:text |str)
-                      |j $ {} (:type :expr) (:by |u0) (:at 1634366036091)
+                      |T $ {} (:text |str) (:type :leaf) (:at 1634366036091) (:by |u0)
+                      |j $ {}
                         :data $ {}
-                          |T $ {} (:type :leaf) (:by |u0) (:at 1634366036091) (:text |or-current-path)
-                          |j $ {} (:type :leaf) (:by |u0) (:at 1634366036091) (:text |calcit-dirname)
-                      |r $ {} (:type :leaf) (:by |u0) (:at 1634366036091) (:text |lib-path)
-                      |v $ {} (:type :expr) (:by |u0) (:at 1634366036091)
+                          |T $ {} (:text |or-current-path) (:type :leaf) (:at 1634366036091) (:by |u0)
+                          |j $ {} (:text |calcit-dirname) (:type :leaf) (:at 1634366036091) (:by |u0)
+                        :type :expr
+                        :at 1634366036091
+                        :by |u0
+                      |r $ {} (:text |lib-path) (:type :leaf) (:at 1634366036091) (:by |u0)
+                      |v $ {}
                         :data $ {}
-                          |T $ {} (:type :leaf) (:by |u0) (:at 1634366036091) (:text |get-dylib-ext)
+                          |T $ {} (:text |get-dylib-ext) (:type :leaf) (:at 1634366036091) (:by |u0)
+                        :type :expr
+                        :at 1634366036091
+                        :by |u0
+                    :type :expr
+                    :at 1634366036091
+                    :by |u0
                   |r $ {} (:text "|\"dbt_to_digits") (:type :leaf) (:at 1634366046174) (:by |u0)
-                  |v $ {} (:type :leaf) (:by |u0) (:at 1634366036091) (:text |x)
+                  |v $ {} (:text |x) (:type :leaf) (:at 1634366036091) (:by |u0)
                 :type :expr
                 :at 1634366036091
                 :by |u0
@@ -1082,11 +1123,51 @@
                       |T $ {} (:text |dbt:to-digits) (:type :leaf) (:at 1634366063233) (:by |u0)
                       |j $ {}
                         :data $ {}
-                          |T $ {} (:type :leaf) (:by |u0) (:at 1634366066597) (:text |dbt)
-                          |j $ {} (:type :leaf) (:by |u0) (:at 1634366066597) (:text |13.23)
+                          |T $ {} (:text |dbt) (:type :leaf) (:at 1634366066597) (:by |u0)
+                          |j $ {} (:text |13.23) (:type :leaf) (:at 1634366066597) (:by |u0)
                         :type :expr
                         :at 1634366066597
                         :by |u0
+                    :type :expr
+                    :at 1634366062945
+                    :by |u0
+                :type :expr
+                :at 1634366061708
+                :by |u0
+              |yf $ {}
+                :data $ {}
+                  |T $ {} (:text |assert=) (:type :leaf) (:at 1634367222666) (:by |u0)
+                  |b $ {}
+                    :data $ {}
+                      |T $ {} (:text |dbt) (:type :leaf) (:at 1634367226227) (:by |u0)
+                      |j $ {} (:text |1) (:type :leaf) (:at 1634367280483) (:by |u0)
+                    :type :expr
+                    :at 1634367230018
+                    :by |u0
+                  |j $ {}
+                    :data $ {}
+                      |T $ {} (:text |dbt:from-digit) (:type :leaf) (:at 1634367189576) (:by |u0)
+                      |j $ {} (:text |1) (:type :leaf) (:at 1634367185792) (:by |u0)
+                    :type :expr
+                    :at 1634366062945
+                    :by |u0
+                :type :expr
+                :at 1634366061708
+                :by |u0
+              |yh $ {}
+                :data $ {}
+                  |T $ {} (:text |assert=) (:type :leaf) (:at 1634367222666) (:by |u0)
+                  |b $ {}
+                    :data $ {}
+                      |T $ {} (:text |dbt) (:type :leaf) (:at 1634367226227) (:by |u0)
+                      |j $ {} (:text |8) (:type :leaf) (:at 1634367284245) (:by |u0)
+                    :type :expr
+                    :at 1634367230018
+                    :by |u0
+                  |j $ {}
+                    :data $ {}
+                      |T $ {} (:text |dbt:from-digit) (:type :leaf) (:at 1634367189576) (:by |u0)
+                      |j $ {} (:text |8) (:type :leaf) (:at 1634367285895) (:by |u0)
                     :type :expr
                     :at 1634366062945
                     :by |u0
@@ -1219,6 +1300,7 @@
                       :data $ {}
                         |uT $ {} (:text |dbt:mul) (:type :leaf) (:at 1634232468679) (:by |u0)
                         |yT $ {} (:text |dbt:to-digits) (:type :leaf) (:at 1634366069913) (:by |u0)
+                        |yj $ {} (:text |dbt:from-digit) (:type :leaf) (:at 1634367195429) (:by |u0)
                         |T $ {} (:text |dbt) (:type :leaf) (:at 1634268873758) (:by |u0)
                         |j $ {} (:text |dbt:format) (:type :leaf) (:at 1634157730781) (:by |u0)
                         |r $ {} (:text |dbt:add) (:type :leaf) (:at 1634158330938) (:by |u0)

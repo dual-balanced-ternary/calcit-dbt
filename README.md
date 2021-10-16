@@ -20,6 +20,9 @@ dbt:mul (dbt 1.2) (dbt 3.4)
 dbt:div (dbt 1.2) (dbt 3.4)
 
 dbt:to-digits $ dbt 12.34
+
+; create dbt from a single digit
+dbt:from-digit 2
 ```
 
 ### License

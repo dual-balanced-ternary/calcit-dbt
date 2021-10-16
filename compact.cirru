@@ -2,7 +2,7 @@
 {} (:package |dbt)
   :configs $ {} (:init-fn |dbt.main/main!) (:reload-fn |dbt.main/reload!)
     :modules $ []
-    :version |0.0.2
+    :version |0.0.3
   :files $ {}
     |dbt.core $ {}
       :ns $ quote
@@ -30,6 +30,11 @@
             &call-dylib-edn
               str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
               , "\"dbt_sub" x y
+        |dbt:from-digit $ quote
+          defn dbt:from-digit (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , "\"dbt_from_digit" x
         |dbt:from-float $ quote
           defn dbt:from-float (x y)
             &call-dylib-edn
@@ -70,7 +75,7 @@
     |dbt.main $ {}
       :ns $ quote
         ns dbt.main $ :require
-          dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float dbt:to-digits
+          dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit
       :defs $ {}
         |run-tests $ quote
           defn run-tests ()
@@ -130,6 +135,8 @@
             println $ dbt:format
               dbt:round $ dbt 13.23
             println $ dbt:to-digits (dbt 13.23)
+            assert= (dbt 1) (dbt:from-digit 1)
+            assert= (dbt 8) (dbt:from-digit 8)
             run-tests
     |dbt.util $ {}
       :ns $ quote (ns dbt.util)

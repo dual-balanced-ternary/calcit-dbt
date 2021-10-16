@@ -1,6 +1,7 @@
 use cirru_edn::Edn;
 use dual_balanced_ternary::{
   create_dual_balanced_ternary_from_pair, dbt_digits, parse_ternary, DualBalancedTernary,
+  DualBalancedTernaryDigit,
 };
 
 #[no_mangle]
@@ -188,5 +189,31 @@ pub fn dbt_to_digits(args: Vec<Edn>) -> Result<Edn, String> {
     }
   } else {
     Err(format!("dbt-digits expected 1 argument, got: {:?}", args))
+  }
+}
+
+#[no_mangle]
+pub fn dbt_from_digit(args: Vec<Edn>) -> Result<Edn, String> {
+  if args.len() == 1 {
+    if let Edn::Number(n) = &args[0] {
+      let v = DualBalancedTernaryDigit::from_u8(*n as u8)?;
+      Ok(Edn::Buffer(
+        (DualBalancedTernary {
+          integral: vec![v],
+          fractional: vec![],
+        })
+        .to_buffer()?,
+      ))
+    } else {
+      Err(format!(
+        "dbt-from-digit expected a dbt value, got: {:?}",
+        args[0]
+      ))
+    }
+  } else {
+    Err(format!(
+      "dbt-from-digit expected 1 argument, got: {:?}",
+      args
+    ))
   }
 }
