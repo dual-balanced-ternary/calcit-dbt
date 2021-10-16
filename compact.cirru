@@ -2,7 +2,7 @@
 {} (:package |dbt)
   :configs $ {} (:init-fn |dbt.main/main!) (:reload-fn |dbt.main/reload!)
     :modules $ []
-    :version |0.0.1
+    :version |0.0.2
   :files $ {}
     |dbt.core $ {}
       :ns $ quote
@@ -57,6 +57,11 @@
               str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
               , "\"dbt_round" x $ either n 0
         |lib-path $ quote (def lib-path "\"/dylibs/libcalcit_dbt")
+        |dbt:to-digits $ quote
+          defn dbt:to-digits (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , "\"dbt_to_digits" x
         |dbt:format $ quote
           defn dbt:format (x)
             &call-dylib-edn
@@ -65,7 +70,7 @@
     |dbt.main $ {}
       :ns $ quote
         ns dbt.main $ :require
-          dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float
+          dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float dbt:to-digits
       :defs $ {}
         |run-tests $ quote
           defn run-tests ()
@@ -124,6 +129,7 @@
               dbt:add (dbt 6) (dbt 6)
             println $ dbt:format
               dbt:round $ dbt 13.23
+            println $ dbt:to-digits (dbt 13.23)
             run-tests
     |dbt.util $ {}
       :ns $ quote (ns dbt.util)
