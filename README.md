@@ -4,17 +4,25 @@
 
 ### Usage
 
-TODO
+functions under `dbt.core`:
 
 ```cirru
-dbt! &1.2
-dbt:add (dbt! &1.2) (dbt! &3.4)
-dbt:sub (dbt! &1.2) (dbt! &3.4)
-dbt:mul (dbt! &1.2) (dbt! &3.4)
-dbt:div (dbt! &1.2) (dbt! &3.4)
+dbt 1.2
 
-dbt:round (dbt! &1.2)
-dbt:round (dbt! &1.2) 1
+dbt:format (dbt 1.2)
+
+dbt:round (dbt 1.2)
+dbt:round (dbt 1.2) 1
+
+dbt:add (dbt 1.2) (dbt 3.4)
+dbt:sub (dbt 1.2) (dbt 3.4)
+dbt:mul (dbt 1.2) (dbt 3.4)
+dbt:div (dbt 1.2) (dbt 3.4)
+
+dbt:to-digits $ dbt 12.34
+
+; create dbt from a single digit
+dbt:from-digit 2
 ```
 
 ### License

@@ -2,7 +2,7 @@
 {} (:package |dbt)
   :configs $ {} (:init-fn |dbt.main/main!) (:reload-fn |dbt.main/reload!)
     :modules $ []
-    :version |0.0.1
+    :version |0.0.3
   :files $ {}
     |dbt.core $ {}
       :ns $ quote
@@ -30,15 +30,22 @@
             &call-dylib-edn
               str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
               , "\"dbt_sub" x y
+        |dbt:from-digit $ quote
+          defn dbt:from-digit (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , "\"dbt_from_digit" x
         |dbt:from-float $ quote
           defn dbt:from-float (x y)
             &call-dylib-edn
               str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
               , "\"dbt_from_float" x y
-        |dbt! $ quote
-          defmacro dbt! (x)
-            quasiquote $ dbt:parse
-              ~ $ turn-string x
+        |dbt $ quote
+          defmacro dbt (x)
+            let
+                s $ turn-string x
+                v $ if (starts-with? s "\"&") s (str "\"&" s)
+              quasiquote $ dbt:parse ~v
         |dbt:to-float $ quote
           defn dbt:to-float (x)
             &call-dylib-edn
@@ -55,6 +62,11 @@
               str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
               , "\"dbt_round" x $ either n 0
         |lib-path $ quote (def lib-path "\"/dylibs/libcalcit_dbt")
+        |dbt:to-digits $ quote
+          defn dbt:to-digits (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , "\"dbt_to_digits" x
         |dbt:format $ quote
           defn dbt:format (x)
             &call-dylib-edn
@@ -63,65 +75,68 @@
     |dbt.main $ {}
       :ns $ quote
         ns dbt.main $ :require
-          dbt.core :refer $ dbt! dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float
+          dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit
       :defs $ {}
         |run-tests $ quote
           defn run-tests ()
-            assert= (dbt! &1) (dbt! &1)
-            assert= (dbt! &1.3) (dbt! &1.3)
+            assert= (dbt 1) (dbt 1)
+            assert= (dbt 1.3) (dbt 1.3)
             assert=
-              dbt:add (dbt! &1) (dbt! &1)
-              dbt! &19
+              dbt:add (dbt 1) (dbt 1)
+              dbt 19
             assert=
               dbt:add
-                dbt:add (dbt! &1) (dbt! &1)
-                dbt! &1
-              dbt! &15
+                dbt:add (dbt 1) (dbt 1)
+                dbt 1
+              dbt 15
             assert=
-              -> (dbt! &1)
-                dbt:add $ dbt! &1
-                dbt:add $ dbt! &1
-                dbt:add $ dbt! &1
-              dbt! &11
+              -> (dbt 1)
+                dbt:add $ dbt 1
+                dbt:add $ dbt 1
+                dbt:add $ dbt 1
+              dbt 11
             assert=
-              dbt:sub (dbt! &44) (dbt! &6)
-              dbt! &466
+              dbt:sub (dbt 44) (dbt 6)
+              dbt 466
             assert=
-              dbt:to-float $ dbt! &33
+              dbt:to-float $ dbt 33
               [] 4 0
             assert=
-              dbt:to-float $ dbt! &66
+              dbt:to-float $ dbt 66
               [] -4 4
-            assert= (dbt:from-float 4 4) (dbt! &88)
+            assert= (dbt:from-float 4 4) (dbt 88)
             assert=
-              dbt:round $ dbt! &3.333
-              dbt! &3
+              dbt:round $ dbt 3.333
+              dbt 3
             assert=
-              dbt:round (dbt! &3.333) 0
-              dbt! &3
+              dbt:round (dbt 3.333) 0
+              dbt 3
             assert=
-              dbt:round (dbt! &3.333) 1
-              dbt! &3.3
+              dbt:round (dbt 3.333) 1
+              dbt 3.3
             assert=
-              dbt:round (dbt! &3.333) 2
-              dbt! &3.33
+              dbt:round (dbt 3.333) 2
+              dbt 3.33
             assert=
-              dbt:div (dbt! &11) (dbt! &19)
-              dbt! &19
+              dbt:div (dbt 11) (dbt 19)
+              dbt 19
             assert=
-              dbt:mul (dbt! &19) (dbt! &19)
-              dbt! &11
+              dbt:mul (dbt 19) (dbt 19)
+              dbt 11
             println "\"Passed test."
         |main! $ quote
           defn main! ()
             println $ dbt:format
-              w-log $ dbt! &13.23
+              w-log $ dbt 13.23
             println $ dbt:format
-              dbt:add (dbt! &13.23) (dbt! &6.6)
+              dbt:add (dbt 13.23) (dbt 6.6)
             println $ dbt:format
-              dbt:add (dbt! &6) (dbt! &6)
+              dbt:add (dbt 6) (dbt 6)
             println $ dbt:format
-              dbt:round $ dbt! &13.23
+              dbt:round $ dbt 13.23
+            println $ dbt:to-digits (dbt 13.23)
+            assert= (dbt 1) (dbt:from-digit 1)
+            assert= (dbt 8) (dbt:from-digit 8)
             run-tests
     |dbt.util $ {}
       :ns $ quote (ns dbt.util)

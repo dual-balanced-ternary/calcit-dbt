@@ -1,6 +1,7 @@
 use cirru_edn::Edn;
 use dual_balanced_ternary::{
-  create_dual_balanced_ternary_from_pair, parse_ternary, DualBalancedTernary,
+  create_dual_balanced_ternary_from_pair, dbt_digits, parse_ternary, DualBalancedTernary,
+  DualBalancedTernaryDigit,
 };
 
 #[no_mangle]
@@ -119,7 +120,7 @@ pub fn dbt_mul(args: Vec<Edn>) -> Result<Edn, String> {
       (Edn::Buffer(buf1), Edn::Buffer(buf2)) => {
         let v1 = DualBalancedTernary::from_buffer(buf1)?;
         let v2 = DualBalancedTernary::from_buffer(buf2)?;
-        Ok(Edn::Buffer((v1 * v2).strip_empty_tails().to_buffer()?))
+        Ok(Edn::Buffer((v1 * v2).to_buffer()?))
       }
       (a, b) => Err(format!("dbt-mul expected 2 buffers, got: {} {}", a, b)),
     }
@@ -160,5 +161,59 @@ pub fn dbt_round(args: Vec<Edn>) -> Result<Edn, String> {
     }
   } else {
     Err(format!("dbt-round expected 2 arguments, got: {:?}", args))
+  }
+}
+
+#[no_mangle]
+pub fn dbt_to_digits(args: Vec<Edn>) -> Result<Edn, String> {
+  if args.len() == 1 {
+    if let Edn::Buffer(buf) = &args[0] {
+      match DualBalancedTernary::from_buffer(buf) {
+        Ok(v) => {
+          let mut xs: Vec<Edn> = vec![];
+          for (i, d) in dbt_digits(v) {
+            xs.push(Edn::List(vec![
+              Edn::Number(i as f64),
+              Edn::Number(d.to_u8() as f64),
+            ]))
+          }
+          Ok(Edn::List(xs))
+        }
+        Err(e) => Err(e),
+      }
+    } else {
+      Err(format!(
+        "dbt-digits expected a dbt value, got: {:?}",
+        args[0]
+      ))
+    }
+  } else {
+    Err(format!("dbt-digits expected 1 argument, got: {:?}", args))
+  }
+}
+
+#[no_mangle]
+pub fn dbt_from_digit(args: Vec<Edn>) -> Result<Edn, String> {
+  if args.len() == 1 {
+    if let Edn::Number(n) = &args[0] {
+      let v = DualBalancedTernaryDigit::from_u8(*n as u8)?;
+      Ok(Edn::Buffer(
+        (DualBalancedTernary {
+          integral: vec![v],
+          fractional: vec![],
+        })
+        .to_buffer()?,
+      ))
+    } else {
+      Err(format!(
+        "dbt-from-digit expected a dbt value, got: {:?}",
+        args[0]
+      ))
+    }
+  } else {
+    Err(format!(
+      "dbt-from-digit expected 1 argument, got: {:?}",
+      args
+    ))
   }
 }
