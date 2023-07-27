@@ -13,4 +13,4 @@ crate-type = ["dylib", "rlib"] # Creates dynamic lib
 
 [dependencies]
 dual_balanced_ternary = "0.1.0"
-cirru_edn = "0.2.20"
+cirru_edn = "0.4.0"
