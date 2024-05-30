@@ -25,6 +25,12 @@
               &call-dylib-edn
                 str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
                 , "\"dbt_div" x y
+        |dbt:equal $ %{} :CodeEntry (:doc |)
+          :code $ quote
+            defn dbt:equal (x y)
+              &call-dylib-edn
+                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+                , "\"dbt_equal" x y
         |dbt:format $ %{} :CodeEntry (:doc |)
           :code $ quote
             defn dbt:format (x)
@@ -88,6 +94,16 @@
             dbt.util :refer $ get-dylib-ext or-current-path
     |dbt.main $ %{} :FileEntry
       :defs $ {}
+        |assert-dbt= $ %{} :CodeEntry (:doc |)
+          :code $ quote
+            defmacro assert-dbt= (a b)
+              quasiquote $ &let ()
+                println $ ~
+                  str-spaced "\"comparing" (format-to-lisp a) "\"to" $ format-to-lisp b
+                if
+                  not $ dbt:equal ~a ~b
+                  raise $ ~
+                    str-spaced "\"failed" (format-to-lisp a) "\"to match" $ format-to-lisp b
         |main! $ %{} :CodeEntry (:doc |)
           :code $ quote
             defn main! ()
@@ -100,61 +116,61 @@
               println $ dbt:format
                 dbt:round $ dbt 13.23
               println $ dbt:to-digits (dbt 13.23)
-              assert= (dbt 1) (dbt:from-digit 1)
-              assert= (dbt 8) (dbt:from-digit 8)
+              assert-dbt= (dbt 1) (dbt:from-digit 1)
+              assert-dbt= (dbt 8) (dbt:from-digit 8)
               run-tests
         |run-tests $ %{} :CodeEntry (:doc |)
           :code $ quote
-            defn run-tests ()
-              assert= (dbt 1) (dbt 1)
-              assert= (dbt 1.3) (dbt 1.3)
-              assert=
+            defn run-tests () (println "\"run tests")
+              assert-dbt= (dbt 1) (dbt 1)
+              assert-dbt= (dbt 1.3) (dbt 1.3)
+              assert-dbt=
                 dbt:add (dbt 1) (dbt 1)
                 dbt 19
-              assert=
+              assert-dbt=
                 dbt:add
                   dbt:add (dbt 1) (dbt 1)
                   dbt 1
                 dbt 15
-              assert=
+              assert-dbt=
                 -> (dbt 1)
                   dbt:add $ dbt 1
                   dbt:add $ dbt 1
                   dbt:add $ dbt 1
                 dbt 11
-              assert=
+              assert-dbt=
                 dbt:sub (dbt 44) (dbt 6)
                 dbt 466
-              assert=
+              ; assert-dbt=
                 dbt:to-float $ dbt 33
                 [] 4 0
-              assert=
+              ; assert-dbt=
                 dbt:to-float $ dbt 66
                 [] -4 4
-              assert= (dbt:from-float 4 4) (dbt 88)
-              assert=
+              assert-dbt= (dbt:from-float 4 4) (dbt 88)
+              assert-dbt=
                 dbt:round $ dbt 3.333
                 dbt 3
-              assert=
+              assert-dbt=
                 dbt:round (dbt 3.333) 0
                 dbt 3
-              assert=
+              assert-dbt=
                 dbt:round (dbt 3.333) 1
                 dbt 3.3
-              assert=
+              assert-dbt=
                 dbt:round (dbt 3.333) 2
                 dbt 3.33
-              assert=
+              assert-dbt=
                 dbt:div (dbt 11) (dbt 19)
                 dbt 19
-              assert=
+              assert-dbt=
                 dbt:mul (dbt 19) (dbt 19)
                 dbt 11
               println "\"Passed test."
       :ns $ %{} :CodeEntry (:doc |)
         :code $ quote
           ns dbt.main $ :require
-            dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit
+            dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit dbt:equal
     |dbt.util $ %{} :FileEntry
       :defs $ {}
         |get-dylib-ext $ %{} :CodeEntry (:doc |)

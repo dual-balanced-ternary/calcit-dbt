@@ -23,7 +23,11 @@ dbt:to-digits $ dbt 12.34
 
 ; create dbt from a single digit
 dbt:from-digit 2
+
+dbt:equal a b
 ```
+
+internally it's using `Edn::AnyRef` so need to compare with a specific function.
 
 ### License
 
