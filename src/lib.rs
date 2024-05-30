@@ -1,4 +1,4 @@
-use cirru_edn::Edn;
+use cirru_edn::{Edn, EdnListView};
 use dual_balanced_ternary::{complex::ComplexXy, dbt_digits, DualBalancedTernary, DualBalancedTernaryDigit};
 use std::{
   convert::{TryFrom, TryInto},
@@ -7,7 +7,7 @@ use std::{
 
 #[no_mangle]
 pub fn abi_version() -> String {
-  String::from("0.0.6")
+  String::from("0.0.9")
 }
 
 #[no_mangle]
@@ -49,7 +49,7 @@ pub fn dbt_to_float(args: Vec<Edn>) -> Result<Edn, String> {
       match DualBalancedTernary::try_from(buf) {
         Ok(v) => {
           let xy = ComplexXy::from(v);
-          Ok(Edn::List(vec![Edn::Number(xy.x), Edn::Number(xy.y)]))
+          Ok(Edn::List(EdnListView(vec![Edn::Number(xy.x), Edn::Number(xy.y)])))
         }
         Err(e) => Err(e),
       }
@@ -164,9 +164,12 @@ pub fn dbt_to_digits(args: Vec<Edn>) -> Result<Edn, String> {
         Ok(v) => {
           let mut xs: Vec<Edn> = vec![];
           for (i, d) in dbt_digits(v) {
-            xs.push(Edn::List(vec![Edn::Number(i as f64), Edn::Number(Into::<u8>::into(d) as f64)]))
+            xs.push(Edn::List(EdnListView(vec![
+              Edn::Number(i as f64),
+              Edn::Number(Into::<u8>::into(d) as f64),
+            ])))
           }
-          Ok(Edn::List(xs))
+          Ok(Edn::List(EdnListView(xs)))
         }
         Err(e) => Err(e),
       }
