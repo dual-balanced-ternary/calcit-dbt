@@ -1,6 +1,6 @@
 
 {} (:package |dbt)
-  :configs $ {} (:init-fn |dbt.main/main!) (:port 6001) (:reload-fn |dbt.main/reload!) (:version |0.0.4)
+  :configs $ {} (:init-fn |dbt.main/main!) (:port 6001) (:reload-fn |dbt.main/reload!) (:version |0.0.6)
     :modules $ []
   :entries $ {}
   :files $ {}
@@ -533,7 +533,7 @@
                           |j $ %{} :Leaf (:at 1634366066597) (:by |u0) (:text |13.23)
               |yf $ %{} :Expr (:at 1634366061708) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1717091383393) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1717445958747) (:by |u0) (:text |assert=)
                   |b $ %{} :Expr (:at 1634367230018) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634367226227) (:by |u0) (:text |dbt)
@@ -544,7 +544,7 @@
                       |j $ %{} :Leaf (:at 1634367185792) (:by |u0) (:text |1)
               |yh $ %{} :Expr (:at 1634366061708) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1717091387680) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1717445961954) (:by |u0) (:text |assert=)
                   |b $ %{} :Expr (:at 1634367230018) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634367226227) (:by |u0) (:text |dbt)
@@ -569,7 +569,7 @@
                   |b $ %{} :Leaf (:at 1717091638245) (:by |u0) (:text "|\"run tests")
               |v $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231915945) (:by |u0)
                     :data $ {}
                       |D $ %{} :Leaf (:at 1634231917695) (:by |u0) (:text |dbt)
@@ -580,7 +580,7 @@
                       |T $ %{} :Leaf (:at 1634270041250) (:by |u0) (:text |1)
               |x $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231977336) (:by |u0)
                     :data $ {}
                       |D $ %{} :Leaf (:at 1634231978870) (:by |u0) (:text |dbt)
@@ -591,7 +591,7 @@
                       |T $ %{} :Leaf (:at 1634270042823) (:by |u0) (:text |1.3)
               |y $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231909816) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634231992039) (:by |u0) (:text |dbt:add)
@@ -609,7 +609,7 @@
                       |T $ %{} :Leaf (:at 1634270048259) (:by |u0) (:text |19)
               |yT $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634232003529) (:by |u0)
                     :data $ {}
                       |D $ %{} :Leaf (:at 1634232007275) (:by |u0) (:text |dbt:add)
@@ -634,7 +634,7 @@
                       |T $ %{} :Leaf (:at 1634270054514) (:by |u0) (:text |15)
               |yj $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231909816) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634232030979) (:by |u0) (:text |->)
@@ -669,7 +669,7 @@
                       |T $ %{} :Leaf (:at 1634270062693) (:by |u0) (:text |11)
               |yr $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231909816) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634232061807) (:by |u0) (:text |dbt:sub)
@@ -688,7 +688,7 @@
               |yv $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
                   |D $ %{} :Leaf (:at 1717091884397) (:by |u0) (:text |;)
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231909816) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634232072573) (:by |u0) (:text |dbt:to-float)
@@ -704,7 +704,7 @@
               |yx $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
                   |D $ %{} :Leaf (:at 1717091885747) (:by |u0) (:text |;)
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231909816) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634232081347) (:by |u0) (:text |dbt:to-float)
@@ -719,7 +719,7 @@
                       |r $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |4)
               |yy $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231909816) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634232096209) (:by |u0) (:text |dbt:from-float)
@@ -731,7 +731,7 @@
                       |T $ %{} :Leaf (:at 1634270074981) (:by |u0) (:text |88)
               |yyT $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231909816) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634232106939) (:by |u0) (:text |dbt:round)
@@ -745,7 +745,7 @@
                       |T $ %{} :Leaf (:at 1634270085254) (:by |u0) (:text |3)
               |yyj $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231909816) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634232113313) (:by |u0) (:text |dbt:round)
@@ -760,7 +760,7 @@
                       |T $ %{} :Leaf (:at 1634270083728) (:by |u0) (:text |3)
               |yyr $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231909816) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634232122674) (:by |u0) (:text |dbt:round)
@@ -775,7 +775,7 @@
                       |T $ %{} :Leaf (:at 1634270082063) (:by |u0) (:text |3.3)
               |yyv $ %{} :Expr (:at 1634231909816) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634231909816) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634231909816) (:by |u0)
                     :data $ {}
                       |T $ %{} :Leaf (:at 1634232129189) (:by |u0) (:text |dbt:round)
@@ -790,7 +790,7 @@
                       |T $ %{} :Leaf (:at 1634270088930) (:by |u0) (:text |3.33)
               |yyw $ %{} :Expr (:at 1634232416785) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634232418273) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634232418273) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634232441964) (:by |u0)
                     :data $ {}
                       |D $ %{} :Leaf (:at 1634232445305) (:by |u0) (:text |dbt:div)
@@ -808,7 +808,7 @@
                       |j $ %{} :Leaf (:at 1634270093487) (:by |u0) (:text |19)
               |yywT $ %{} :Expr (:at 1634232416785) (:by |u0)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1634232418273) (:by |u0) (:text |assert-dbt=)
+                  |T $ %{} :Leaf (:at 1634232418273) (:by |u0) (:text |assert=)
                   |j $ %{} :Expr (:at 1634232441964) (:by |u0)
                     :data $ {}
                       |D $ %{} :Leaf (:at 1634232486206) (:by |u0) (:text |dbt:mul)

@@ -1,6 +1,6 @@
 [package]
 name = "calcit-dbt"
-version = "0.0.5"
+version = "0.0.6"
 edition = "2021"
 
 [lib]
@@ -13,4 +13,5 @@ crate-type = ["dylib", "rlib"] # Creates dynamic lib
 
 [dependencies]
 dual_balanced_ternary = "0.1.1"
-cirru_edn = "0.6.9"
+cirru_edn = "0.6.10"
+# cirru_edn = { path = "/Users/chenyong/repo/cirru/edn.rs" }

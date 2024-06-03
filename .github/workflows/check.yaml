@@ -20,7 +20,7 @@ jobs:
 
       - uses: calcit-lang/setup-cr@0.0.3
         with:
-          version: "0.8.55"
+          version: "0.8.56"
 
       - run: cargo build --release
 

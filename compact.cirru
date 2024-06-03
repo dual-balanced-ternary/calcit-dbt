@@ -1,6 +1,6 @@
 
 {} (:package |dbt)
-  :configs $ {} (:init-fn |dbt.main/main!) (:reload-fn |dbt.main/reload!) (:version |0.0.4)
+  :configs $ {} (:init-fn |dbt.main/main!) (:reload-fn |dbt.main/reload!) (:version |0.0.6)
     :modules $ []
   :entries $ {}
   :files $ {}
@@ -116,54 +116,54 @@
               println $ dbt:format
                 dbt:round $ dbt 13.23
               println $ dbt:to-digits (dbt 13.23)
-              assert-dbt= (dbt 1) (dbt:from-digit 1)
-              assert-dbt= (dbt 8) (dbt:from-digit 8)
+              assert= (dbt 1) (dbt:from-digit 1)
+              assert= (dbt 8) (dbt:from-digit 8)
               run-tests
         |run-tests $ %{} :CodeEntry (:doc |)
           :code $ quote
             defn run-tests () (println "\"run tests")
-              assert-dbt= (dbt 1) (dbt 1)
-              assert-dbt= (dbt 1.3) (dbt 1.3)
-              assert-dbt=
+              assert= (dbt 1) (dbt 1)
+              assert= (dbt 1.3) (dbt 1.3)
+              assert=
                 dbt:add (dbt 1) (dbt 1)
                 dbt 19
-              assert-dbt=
+              assert=
                 dbt:add
                   dbt:add (dbt 1) (dbt 1)
                   dbt 1
                 dbt 15
-              assert-dbt=
+              assert=
                 -> (dbt 1)
                   dbt:add $ dbt 1
                   dbt:add $ dbt 1
                   dbt:add $ dbt 1
                 dbt 11
-              assert-dbt=
+              assert=
                 dbt:sub (dbt 44) (dbt 6)
                 dbt 466
-              ; assert-dbt=
+              ; assert=
                 dbt:to-float $ dbt 33
                 [] 4 0
-              ; assert-dbt=
+              ; assert=
                 dbt:to-float $ dbt 66
                 [] -4 4
-              assert-dbt= (dbt:from-float 4 4) (dbt 88)
-              assert-dbt=
+              assert= (dbt:from-float 4 4) (dbt 88)
+              assert=
                 dbt:round $ dbt 3.333
                 dbt 3
-              assert-dbt=
+              assert=
                 dbt:round (dbt 3.333) 0
                 dbt 3
-              assert-dbt=
+              assert=
                 dbt:round (dbt 3.333) 1
                 dbt 3.3
-              assert-dbt=
+              assert=
                 dbt:round (dbt 3.333) 2
                 dbt 3.33
-              assert-dbt=
+              assert=
                 dbt:div (dbt 11) (dbt 19)
                 dbt 19
-              assert-dbt=
+              assert=
                 dbt:mul (dbt 19) (dbt 19)
                 dbt 11
               println "\"Passed test."
