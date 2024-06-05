@@ -1,6 +1,6 @@
 [package]
 name = "calcit-dbt"
-version = "0.0.4"
+version = "0.0.6"
 edition = "2021"
 
 [lib]
@@ -12,5 +12,6 @@ crate-type = ["dylib", "rlib"] # Creates dynamic lib
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dual_balanced_ternary = "0.1.0"
-cirru_edn = "0.4.0"
+dual_balanced_ternary = "0.1.1"
+cirru_edn = "0.6.10"
+# cirru_edn = { path = "/Users/chenyong/repo/cirru/edn.rs" }
