@@ -25,6 +25,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           repository: dual-balanced-ternary/dual_balanced_ternary.rs
+          ref: codex/modernize-dbt-20260826
           path: dual_balanced_ternary.rs
 
       - uses: dtolnay/rust-toolchain@stable
