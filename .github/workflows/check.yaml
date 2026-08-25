@@ -21,11 +21,10 @@ jobs:
         with:
           path: calcit-dbt
 
-      # Test the paired core changes until 0.2 is published.
+      # The path dependency is checked out as a sibling, matching local development.
       - uses: actions/checkout@v6
         with:
           repository: dual-balanced-ternary/dual_balanced_ternary.rs
-          ref: codex/performance-algebra-20260826
           path: dual_balanced_ternary.rs
 
       - uses: dtolnay/rust-toolchain@stable
