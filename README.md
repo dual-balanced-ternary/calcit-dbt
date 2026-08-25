@@ -15,6 +15,18 @@ dbt:add (dbt 1.2) (dbt 3.4)
 dbt:sub (dbt 1.2) (dbt 3.4)
 dbt:mul (dbt 1.2) (dbt 3.4)
 dbt:div (dbt 1.2) (dbt 3.4)
+dbt:conjugate $ dbt 8
+dbt:norm $ dbt 8
+dbt:pow (dbt 8) 4
+dbt:move-by (dbt 1.2) 2
+
+; carry-free arithmetic in F9, using digit numbers 1 through 9
+dbt:f9-add 8 8
+dbt:f9-mul 8 8
+dbt:f9-inverse 8
+dbt:f9-pow 8 8
+dbt:f9-trace 8
+dbt:f9-norm 8
 
 dbt:to-float $ dbt 12.34
 dbt:from-float 4 4
