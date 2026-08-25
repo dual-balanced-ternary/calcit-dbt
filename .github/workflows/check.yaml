@@ -35,9 +35,8 @@ jobs:
         with:
           workspaces: calcit-dbt
 
-      - uses: calcit-lang/setup-cr@0.0.8
-        with:
-          version: "0.13.44"
+      - name: Install Calcit
+        run: cargo install calcit --version 0.13.44 --locked --bin calcit
 
       - run: cargo fmt -- --check
 
@@ -47,8 +46,8 @@ jobs:
 
       - run: ./build.sh
 
-      - run: cr --check-only
+      - run: calcit --check-only
 
-      - run: cr analyze quality --baseline config/calcit-quality.json
+      - run: calcit analyze quality --baseline config/calcit-quality.json
 
-      - run: cr
+      - run: calcit
