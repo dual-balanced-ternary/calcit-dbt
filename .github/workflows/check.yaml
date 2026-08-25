@@ -6,24 +6,49 @@ on:
 
 name: Test
 
+permissions:
+  contents: read
+
 jobs:
   build_and_test:
     name: Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: calcit-dbt
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+        with:
+          path: calcit-dbt
+
+      # The binding tracks the sibling core crate until 0.2 is published.
+      - uses: actions/checkout@v6
+        with:
+          repository: dual-balanced-ternary/dual_balanced_ternary.rs
+          path: dual_balanced_ternary.rs
 
       - uses: dtolnay/rust-toolchain@stable
         with:
-          # toolchain: nightly
-          components: clippy
+          components: clippy, rustfmt
 
-      - uses: calcit-lang/setup-cr@0.0.3
+      - uses: Swatinem/rust-cache@v2
         with:
-          version: "0.8.56"
+          workspaces: calcit-dbt
 
-      - run: cargo build --release
+      - uses: calcit-lang/setup-cr@0.0.8
+        with:
+          version: "0.13.44"
 
-      - run: mkdir -p dylibs/ && ls target/release/ && cp -v target/release/libcalcit_dbt.* dylibs/
+      - run: cargo fmt -- --check
 
-      - run: cr -1
+      - run: cargo clippy --all-targets -- -D warnings
+
+      - run: cargo test --all-targets
+
+      - run: ./build.sh
+
+      - run: cr --check-only
+
+      - run: cr analyze quality --baseline config/calcit-quality.json
+
+      - run: cr

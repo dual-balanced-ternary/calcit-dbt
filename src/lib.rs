@@ -1,348 +1,159 @@
+//! Calcit FFI bindings for dual balanced ternary arithmetic.
+
 use cirru_edn::{Edn, EdnListView};
-use dual_balanced_ternary::{complex::ComplexXy, dbt_digits, DualBalancedTernary, DualBalancedTernaryDigit};
+use dual_balanced_ternary::{DualBalancedTernary, DualBalancedTernaryDigit, complex::ComplexXy, dbt_digits};
 use std::{convert::TryFrom, str::FromStr};
 
-#[no_mangle]
+const ABI_VERSION: &str = "0.0.9";
+
+fn expect_arity(args: &[Edn], expected: usize, name: &str) -> Result<(), String> {
+  if args.len() == expected {
+    Ok(())
+  } else {
+    Err(format!("{name} expected {expected} argument(s), got {}: {args:?}", args.len()))
+  }
+}
+
+fn read_dbt(value: &Edn, name: &str) -> Result<DualBalancedTernary, String> {
+  match value {
+    Edn::AnyRef(value) => value
+      .0
+      .read()
+      .map_err(|error| format!("{name} could not read DBT value: {error}"))?
+      .as_any()
+      .downcast_ref::<DualBalancedTernary>()
+      .cloned()
+      .ok_or_else(|| format!("{name} expected a DBT value, got {value:?}")),
+    Edn::Buffer(buffer) => DualBalancedTernary::try_from(buffer.as_slice()),
+    other => Err(format!("{name} expected a DBT value or buffer, got {other}")),
+  }
+}
+
+fn unary_dbt(args: Vec<Edn>, name: &str, operation: impl FnOnce(DualBalancedTernary) -> Result<Edn, String>) -> Result<Edn, String> {
+  expect_arity(&args, 1, name)?;
+  operation(read_dbt(&args[0], name)?)
+}
+
+fn binary_dbt(
+  args: Vec<Edn>,
+  name: &str,
+  operation: impl FnOnce(DualBalancedTernary, DualBalancedTernary) -> Result<DualBalancedTernary, String>,
+) -> Result<Edn, String> {
+  expect_arity(&args, 2, name)?;
+  let left = read_dbt(&args[0], name)?;
+  let right = read_dbt(&args[1], name)?;
+  operation(left, right).map(Edn::any_ref)
+}
+
+#[unsafe(no_mangle)]
 pub fn abi_version() -> String {
-  String::from("0.0.9")
+  String::from(ABI_VERSION)
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
+pub fn edn_version() -> String {
+  cirru_edn::version().to_owned()
+}
+
+#[unsafe(no_mangle)]
 pub fn dbt_parse(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 1 {
-    match &args[0] {
-      Edn::Str(s) => match DualBalancedTernary::from_str(s) {
-        Ok(v) => Ok(Edn::any_ref(v)),
-        Err(e) => Err(e),
-      },
-      Edn::Buffer(buf) => match DualBalancedTernary::try_from(buf) {
-        Ok(v) => Ok(Edn::any_ref(v)),
-        Err(e) => Err(e),
-      },
-      a => Err(format!("unknown value for dbt: {}", a)),
-    }
-  } else {
-    Err(format!("dbt-parse expected 1 argument, got: {:?}", args))
+  expect_arity(&args, 1, "dbt-parse")?;
+  match &args[0] {
+    Edn::Str(source) => DualBalancedTernary::from_str(source).map(Edn::any_ref),
+    Edn::Buffer(buffer) => DualBalancedTernary::try_from(buffer.as_slice()).map(Edn::any_ref),
+    other => Err(format!("dbt-parse expected a string or buffer, got {other}")),
   }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn dbt_format(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 1 {
-    if let Edn::Buffer(buf) = &args[0] {
-      match DualBalancedTernary::try_from(buf) {
-        Ok(v) => Ok(Edn::str(v.to_string())),
-        Err(e) => Err(e),
-      }
-    } else if let Edn::AnyRef(v) = &args[0] {
-      if let Some(v) = v
-        .0
-        .read()
-        .map_err(|e| e.to_string())?
-        .as_any()
-        .downcast_ref::<DualBalancedTernary>()
-      {
-        Ok(Edn::str(v.to_string()))
-      } else {
-        Err(format!("dbt-format expected a dbt value, got: {:?}", args[0]))
-      }
-    } else {
-      Err(format!("db-ternary expected a dbt value, got: {:?}", args[0]))
-    }
-  } else {
-    Err(format!("db-ternary expected 1 argument, got: {:?}", args))
-  }
+  unary_dbt(args, "dbt-format", |value| Ok(Edn::str(value.to_string())))
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn dbt_to_float(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 1 {
-    if let Edn::Buffer(buf) = &args[0] {
-      match DualBalancedTernary::try_from(buf) {
-        Ok(v) => {
-          let xy = ComplexXy::from(v);
-          Ok(Edn::List(EdnListView(vec![Edn::Number(xy.x), Edn::Number(xy.y)])))
-        }
-        Err(e) => Err(e),
-      }
-    } else if let Edn::AnyRef(f) = &args[0] {
-      if let Some(v) = f
-        .0
-        .read()
-        .map_err(|e| e.to_string())?
-        .as_any()
-        .downcast_ref::<DualBalancedTernary>()
-      {
-        let xy = ComplexXy::from(v.clone());
-        Ok(Edn::List(EdnListView(vec![Edn::Number(xy.x), Edn::Number(xy.y)])))
-      } else {
-        Err(format!("db-to-float expected a dbt value, got: {:?}", args[0]))
-      }
-    } else {
-      Err(format!("db-to-float expected a dbt value, got: {:?}", args[0]))
-    }
-  } else {
-    Err(format!("db-to-float expected 1 argument, got: {:?}", args))
-  }
+  unary_dbt(args, "dbt-to-float", |value| {
+    let xy = ComplexXy::from(&value);
+    Ok(Edn::List(EdnListView(vec![Edn::Number(xy.x), Edn::Number(xy.y)])))
+  })
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn dbt_from_float(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 2 {
-    match (&args[0], &args[1]) {
-      (Edn::Number(x), Edn::Number(y)) => {
-        let v = DualBalancedTernary::new(x.to_owned(), y.to_owned());
-        Ok(Edn::any_ref(v))
-      }
-      (a, b) => Err(format!("dbt-from-pair expected 2 any-refs, got: {} {}", a, b)),
-    }
-  } else {
-    Err(format!("dbt-from-pair expected 2 arguments, got: {:?}", args))
+  expect_arity(&args, 2, "dbt-from-float")?;
+  match (&args[0], &args[1]) {
+    (Edn::Number(x), Edn::Number(y)) => DualBalancedTernary::try_new(*x, *y).map(Edn::any_ref),
+    (x, y) => Err(format!("dbt-from-float expected two numbers, got {x} and {y}")),
   }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn dbt_add(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 2 {
-    match (&args[0], &args[1]) {
-      (Edn::AnyRef(v1), Edn::AnyRef(v2)) => {
-        if let Some(v1) = v1
-          .0
-          .read()
-          .map_err(|e| e.to_string())?
-          .as_any()
-          .downcast_ref::<DualBalancedTernary>()
-        {
-          if let Some(v2) = v2
-            .0
-            .read()
-            .map_err(|e| e.to_string())?
-            .as_any()
-            .downcast_ref::<DualBalancedTernary>()
-          {
-            let v = v1.clone() + v2.clone();
-            Ok(Edn::any_ref(v))
-          } else {
-            Err(format!("dbt-add expected 2 dbt values, got: {} {:?}", v1, v2))
-          }
-        } else {
-          Err(format!("dbt-add expected 2 dbt values, got: {:?} {:?}", v1, v2))
-        }
-      }
-      (a, b) => Err(format!("dbt-add expected 2 any-refs, got: {} {}", a, b)),
-    }
-  } else {
-    Err(format!("dbt-add expected 2 arguments, got: {:?}", args))
-  }
+  binary_dbt(args, "dbt-add", |left, right| Ok(left + right))
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn dbt_sub(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 2 {
-    match (&args[0], &args[1]) {
-      (Edn::AnyRef(v1), Edn::AnyRef(v2)) => {
-        if let Some(v1) = v1
-          .0
-          .read()
-          .map_err(|e| e.to_string())?
-          .as_any()
-          .downcast_ref::<DualBalancedTernary>()
-        {
-          if let Some(v2) = v2
-            .0
-            .read()
-            .map_err(|e| e.to_string())?
-            .as_any()
-            .downcast_ref::<DualBalancedTernary>()
-          {
-            let v = v1.clone() - v2.clone();
-            Ok(Edn::any_ref(v))
-          } else {
-            Err(format!("dbt-sub expected 2 dbt values, got: {} {:?}", v1, v2))
-          }
-        } else {
-          Err(format!("dbt-sub expected 2 dbt values, got: {:?} {:?}", v1, v2))
-        }
-      }
-      (a, b) => Err(format!("dbt-sub expected 2 buffers, got: {} {}", a, b)),
-    }
-  } else {
-    Err(format!("dbt-sub expected 2 arguments, got: {:?}", args))
-  }
+  binary_dbt(args, "dbt-sub", |left, right| Ok(left - right))
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn dbt_mul(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 2 {
-    match (&args[0], &args[1]) {
-      (Edn::AnyRef(v1), Edn::AnyRef(v2)) => {
-        if let Some(v1) = v1
-          .0
-          .read()
-          .map_err(|e| e.to_string())?
-          .as_any()
-          .downcast_ref::<DualBalancedTernary>()
-        {
-          if let Some(v2) = v2
-            .0
-            .read()
-            .map_err(|e| e.to_string())?
-            .as_any()
-            .downcast_ref::<DualBalancedTernary>()
-          {
-            let v = v1.clone() * v2.clone();
-            Ok(Edn::any_ref(v))
-          } else {
-            Err(format!("dbt-mul expected 2 dbt values, got: {} {:?}", v1, v2))
-          }
-        } else {
-          Err(format!("dbt-mul expected 2 dbt values, got: {:?} {:?}", v1, v2))
-        }
-      }
-      (a, b) => Err(format!("dbt-mul expected 2 buffers, got: {} {}", a, b)),
-    }
-  } else {
-    Err(format!("dbt-mul expected 2 arguments, got: {:?}", args))
-  }
+  binary_dbt(args, "dbt-mul", |left, right| Ok(left * right))
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn dbt_div(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 2 {
-    match (&args[0], &args[1]) {
-      (Edn::AnyRef(v1), Edn::AnyRef(v2)) => {
-        if let Some(v1) = v1
-          .0
-          .read()
-          .map_err(|e| e.to_string())?
-          .as_any()
-          .downcast_ref::<DualBalancedTernary>()
-        {
-          if let Some(v2) = v2
-            .0
-            .read()
-            .map_err(|e| e.to_string())?
-            .as_any()
-            .downcast_ref::<DualBalancedTernary>()
-          {
-            let v = v1.clone() / v2.clone();
-            Ok(Edn::any_ref(v))
-          } else {
-            Err(format!("dbt-div expected 2 dbt values, got: {} {:?}", v1, v2))
-          }
-        } else {
-          Err(format!("dbt-div expected 2 dbt values, got: {:?} {:?}", v1, v2))
-        }
-      }
-      (a, b) => Err(format!("dbt-div expected 2 buffers, got: {} {}", a, b)),
-    }
-  } else {
-    Err(format!("dbt-div expected 2 arguments, got: {:?}", args))
-  }
+  binary_dbt(args, "dbt-div", |left, right| left.checked_div(&right))
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn dbt_round(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 2 {
-    match (&args[0], &args[1]) {
-      (Edn::AnyRef(v1), Edn::Number(n)) => {
-        if let Some(v1) = v1
-          .0
-          .read()
-          .map_err(|e| e.to_string())?
-          .as_any()
-          .downcast_ref::<DualBalancedTernary>()
-        {
-          let v = v1.round_n(n.floor() as usize);
-          Ok(Edn::any_ref(v))
-        } else {
-          Err(format!("dbt-round expected a dbt value, got: {:?}", args[0]))
-        }
-      }
-      (a, b) => Err(format!("dbt-round expected a buffer and a size, got: {} {}", a, b)),
-    }
-  } else {
-    Err(format!("dbt-round expected 2 arguments, got: {:?}", args))
+  expect_arity(&args, 2, "dbt-round")?;
+  let value = read_dbt(&args[0], "dbt-round")?;
+  let Edn::Number(places) = args[1] else {
+    return Err(format!("dbt-round expected a numeric precision, got {}", args[1]));
+  };
+  if !places.is_finite() || places < 0.0 || places.fract() != 0.0 || places > usize::MAX as f64 {
+    return Err(format!("dbt-round precision must be a non-negative integer, got {places}"));
   }
+  Ok(Edn::any_ref(value.round_n(places as usize)))
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn dbt_to_digits(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 1 {
-    if let Edn::AnyRef(v) = &args[0] {
-      if let Some(v) = v
-        .0
-        .read()
-        .map_err(|e| e.to_string())?
-        .as_any()
-        .downcast_ref::<DualBalancedTernary>()
-      {
-        let mut xs: Vec<Edn> = vec![];
-        for (i, d) in dbt_digits(v.to_owned()) {
-          xs.push(Edn::List(EdnListView(vec![
-            Edn::Number(i as f64),
-            Edn::Number(Into::<u8>::into(d) as f64),
-          ])))
-        }
-        Ok(Edn::List(EdnListView(xs)))
-      } else {
-        Err(format!("dbt-digits expected a dbt value, got: {:?}", args[0]))
-      }
-    } else {
-      Err(format!("dbt-digits expected a dbt value, got: {:?}", args[0]))
-    }
-  } else {
-    Err(format!("dbt-digits expected 1 argument, got: {:?}", args))
-  }
+  unary_dbt(args, "dbt-to-digits", |value| {
+    let digits = dbt_digits(value)
+      .into_iter()
+      .map(|(position, digit)| Edn::List(EdnListView(vec![Edn::Number(position as f64), Edn::Number(u8::from(digit) as f64)])))
+      .collect();
+    Ok(Edn::List(EdnListView(digits)))
+  })
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn dbt_from_digit(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 1 {
-    if let Edn::Number(n) = &args[0] {
-      let v = DualBalancedTernaryDigit::try_from(*n as u8)?;
-      Ok(Edn::any_ref(DualBalancedTernary {
-        integral: vec![v],
-        fractional: vec![],
-      }))
-    } else {
-      Err(format!("dbt-from-digit expected a dbt value, got: {:?}", args[0]))
-    }
-  } else {
-    Err(format!("dbt-from-digit expected 1 argument, got: {:?}", args))
+  expect_arity(&args, 1, "dbt-from-digit")?;
+  let Edn::Number(number) = args[0] else {
+    return Err(format!("dbt-from-digit expected an integer from 1 through 9, got {}", args[0]));
+  };
+  if !number.is_finite() || number.fract() != 0.0 || !(1.0..=9.0).contains(&number) {
+    return Err(format!("dbt-from-digit expected an integer from 1 through 9, got {number}"));
   }
+  let digit = DualBalancedTernaryDigit::try_from(number as u8)?;
+  Ok(Edn::any_ref(DualBalancedTernary {
+    integral: vec![digit],
+    fractional: vec![],
+  }))
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
+pub fn dbt_to_buffer(args: Vec<Edn>) -> Result<Edn, String> {
+  unary_dbt(args, "dbt-to-buffer", |value| Vec::<u8>::try_from(value).map(Edn::Buffer))
+}
+
+#[unsafe(no_mangle)]
 pub fn dbt_equal(args: Vec<Edn>) -> Result<Edn, String> {
-  if args.len() == 2 {
-    match (&args[0], &args[1]) {
-      (Edn::AnyRef(v1), Edn::AnyRef(v2)) => {
-        if let Some(v1) = v1
-          .0
-          .read()
-          .map_err(|e| e.to_string())?
-          .as_any()
-          .downcast_ref::<DualBalancedTernary>()
-        {
-          if let Some(v2) = v2
-            .0
-            .read()
-            .map_err(|e| e.to_string())?
-            .as_any()
-            .downcast_ref::<DualBalancedTernary>()
-          {
-            Ok(Edn::Bool(v1 == v2))
-          } else {
-            Err(format!("dbt-equal expected 2 dbt values, got: {} {:?}", v1, v2))
-          }
-        } else {
-          Err(format!("dbt-equal expected 2 dbt values, got: {:?} {:?}", v1, v2))
-        }
-      }
-      (a, b) => Err(format!("dbt-equal expected 2 any-refs, got: {} {}", a, b)),
-    }
-  } else {
-    Err(format!("dbt-equal expected 2 arguments, got: {:?}", args))
-  }
+  expect_arity(&args, 2, "dbt-equal")?;
+  Ok(Edn::Bool(read_dbt(&args[0], "dbt-equal")? == read_dbt(&args[1], "dbt-equal")?))
 }

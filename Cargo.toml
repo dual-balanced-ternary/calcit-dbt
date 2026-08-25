@@ -1,17 +1,21 @@
 [package]
 name = "calcit-dbt"
-version = "0.0.6"
-edition = "2021"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT"
+description = "Calcit bindings for dual balanced ternary arithmetic"
+repository = "https://github.com/dual-balanced-ternary/calcit-dbt"
 
 [lib]
 name = "calcit_dbt"
 path = "src/lib.rs"
-crate-type = ["dylib", "rlib"] # Creates dynamic lib
+crate-type = ["cdylib", "rlib"]
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dual_balanced_ternary = "0.1.1"
-cirru_edn = "0.6.10"
+dual_balanced_ternary = { version = "0.2.0", path = "../dual_balanced_ternary.rs" }
+cirru_edn = "0.8.0"
 # cirru_edn = { path = "/Users/chenyong/repo/cirru/edn.rs" }

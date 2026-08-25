@@ -1,6 +1,14 @@
-# cargo build
-# mkdir -p dylibs/ && ls target/debug/ && cp -v target/debug/libcalcit_dbt.* dylibs/
+#!/usr/bin/env bash
+set -euo pipefail
 
-rm -rfv dylibs
 cargo build --release
-mkdir -p dylibs/ && ls target/release/ && cp -v target/release/libcalcit_dbt.* dylibs/
+
+case "$(uname -s)" in
+  Darwin) extension="dylib" ;;
+  Linux) extension="so" ;;
+  MINGW*|MSYS*|CYGWIN*) extension="dll" ;;
+  *) echo "Unsupported operating system: $(uname -s)" >&2; exit 1 ;;
+esac
+
+install -d dylibs
+cp -v "target/release/libcalcit_dbt.${extension}" dylibs/
