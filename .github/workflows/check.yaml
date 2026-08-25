@@ -21,11 +21,11 @@ jobs:
         with:
           path: calcit-dbt
 
-      # The binding tracks the sibling core crate until 0.2 is published.
+      # Test the paired core changes until 0.2 is published.
       - uses: actions/checkout@v6
         with:
           repository: dual-balanced-ternary/dual_balanced_ternary.rs
-          ref: codex/modernize-dbt-20260826
+          ref: codex/performance-algebra-20260826
           path: dual_balanced_ternary.rs
 
       - uses: dtolnay/rust-toolchain@stable
