@@ -13,9 +13,9 @@ fn format(value: Edn) -> String {
 }
 
 #[test]
-fn exposes_current_calcit_abi() {
-  assert_eq!(abi_version(), "0.0.9");
-  assert_eq!(edn_version(), cirru_edn::version());
+fn exposes_c_safe_buffer_protocol() {
+  assert_eq!(calcit_ffi_buffer_version(), calcit_native_ffi::BUFFER_PROTOCOL_VERSION);
+  assert!(matches!(parse("&1"), Edn::Buffer(_)));
 }
 
 #[test]

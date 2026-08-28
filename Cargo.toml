@@ -16,6 +16,7 @@ crate-type = ["cdylib", "rlib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+calcit_native_ffi = "0.1.1"
 dual_balanced_ternary = { version = "0.2.0", path = "../dual_balanced_ternary.rs" }
 cirru_edn = "0.8.0"
 # cirru_edn = { path = "/Users/chenyong/repo/cirru/edn.rs" }
