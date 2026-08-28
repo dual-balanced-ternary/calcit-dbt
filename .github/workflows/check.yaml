@@ -35,8 +35,10 @@ jobs:
         with:
           workspaces: calcit-dbt
 
-      - name: Install Calcit
-        run: cargo install calcit --version 0.13.44 --locked --bin calcit
+      - uses: calcit-lang/setup-calcit@v1.3.0
+        with:
+          deps-file: calcit-dbt/deps.cirru
+          tools: calcit,caps
 
       - run: cargo fmt -- --check
 
@@ -46,8 +48,16 @@ jobs:
 
       - run: ./build.sh
 
-      - run: calcit --check-only
+      - run: bash scripts/check-c-safe-ffi.sh
 
-      - run: calcit analyze quality --baseline config/calcit-quality.json
+      - run: caps --strict --ci
 
-      - run: calcit
+      - name: Validate canonical typed snapshot
+        run: |
+          calcit calcit.cirru edit format
+          git diff --exit-code -- calcit.cirru
+          calcit calcit.cirru --check-only
+          calcit calcit.cirru analyze quality
+          calcit calcit.cirru analyze dynamic-methods --max 0
+
+      - run: calcit calcit.cirru
