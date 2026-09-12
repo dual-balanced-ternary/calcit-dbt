@@ -17,12 +17,12 @@ jobs:
       run:
         working-directory: calcit-dbt
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           path: calcit-dbt
 
       # The path dependency is checked out as a sibling, matching local development.
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           repository: dual-balanced-ternary/dual_balanced_ternary.rs
           path: dual_balanced_ternary.rs
@@ -31,11 +31,11 @@ jobs:
         with:
           components: clippy, rustfmt
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
           workspaces: calcit-dbt
 
-      - uses: calcit-lang/setup-calcit@v1.3.0
+      - uses: calcit-lang/setup-calcit@3b5843cb725963bb4ee158cfe49dad877134963e # v1.3.0
         with:
           deps-file: calcit-dbt/deps.cirru
           tools: calcit,caps
