@@ -35,7 +35,7 @@ jobs:
         with:
           workspaces: calcit-dbt
 
-      - uses: calcit-lang/setup-calcit@3b5843cb725963bb4ee158cfe49dad877134963e # v1.3.0
+      - uses: calcit-lang/setup-calcit@704b3f5cd6f9ce3bd1e0c926dbdd1d181adb8180 # v1.4.0
         with:
           deps-file: calcit-dbt/deps.cirru
           tools: calcit,caps
