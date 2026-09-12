@@ -1,14 +1,14 @@
 
-{} (:about "|Machine-generated snapshot. Do not edit directly — changes will be overwritten. Use `calcit query` to inspect and `calcit edit`/`calcit tree` to modify. Run `calcit docs agents --full` first. Manual edits must follow format and schema conventions, then run `calcit edit format`.") (:package |dbt)
+{} (:about "|Machine-generated snapshot. Do not edit directly — changes will be overwritten. Use `calcit query` to inspect and `calcit edit`/`calcit tree` to modify. Run `calcit docs agents --contract` before mutations; use `--full` for first orientation or changed contract digest. Manual edits must follow format and schema conventions, then run `calcit edit format`.") (:package |dbt)
   :entries $ {}
     :default $ {} (:description |) (:init-fn 'dbt.main/main!) (:mode :native) (:reload-fn 'dbt.main/reload!)
       :feature-policy $ {}
       :modules $ []
       :type-slots $ {}
   :files $ {}
-    |dbt.core $ %{} 'FileEntry
+    'dbt.core $ %{} 'FileEntry
       :defs $ {}
-        |dbt $ %{} 'CodeEntry (:doc |)
+        'dbt $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defmacro dbt (x)
               let
@@ -21,7 +21,7 @@
               :capabilities $ #{}
               :expansion $ :: 'Expr 'Buffer
               :required $ [] 'Syntax
-        |dbt:add $ %{} 'CodeEntry (:doc |)
+        'dbt:add $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:add (x y)
               &call-dylib-edn
@@ -31,7 +31,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Buffer 'Buffer
-        |dbt:conjugate $ %{} 'CodeEntry (:doc |)
+        'dbt:conjugate $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:conjugate (x)
               &call-dylib-edn
@@ -41,7 +41,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Buffer
-        |dbt:div $ %{} 'CodeEntry (:doc |)
+        'dbt:div $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:div (x y)
               &call-dylib-edn
@@ -51,7 +51,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Buffer 'Buffer
-        |dbt:equal $ %{} 'CodeEntry (:doc |)
+        'dbt:equal $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:equal (x y)
               &call-dylib-edn
@@ -61,7 +61,7 @@
           :schema $ :: 'Fn
             {} (:return 'Bool)
               :args $ [] 'Buffer 'Buffer
-        |dbt:f9-add $ %{} 'CodeEntry (:doc |)
+        'dbt:f9-add $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:f9-add (x y)
               &call-dylib-edn
@@ -71,7 +71,7 @@
           :schema $ :: 'Fn
             {} (:return 'Number)
               :args $ [] 'Number 'Number
-        |dbt:f9-inverse $ %{} 'CodeEntry (:doc |)
+        'dbt:f9-inverse $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:f9-inverse (x)
               &call-dylib-edn
@@ -81,7 +81,7 @@
           :schema $ :: 'Fn
             {} (:return 'Number)
               :args $ [] 'Number
-        |dbt:f9-mul $ %{} 'CodeEntry (:doc |)
+        'dbt:f9-mul $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:f9-mul (x y)
               &call-dylib-edn
@@ -91,7 +91,7 @@
           :schema $ :: 'Fn
             {} (:return 'Number)
               :args $ [] 'Number 'Number
-        |dbt:f9-norm $ %{} 'CodeEntry (:doc |)
+        'dbt:f9-norm $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:f9-norm (x)
               &call-dylib-edn
@@ -101,7 +101,7 @@
           :schema $ :: 'Fn
             {} (:return 'Number)
               :args $ [] 'Number
-        |dbt:f9-pow $ %{} 'CodeEntry (:doc |)
+        'dbt:f9-pow $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:f9-pow (x exponent)
               &call-dylib-edn
@@ -111,7 +111,7 @@
           :schema $ :: 'Fn
             {} (:return 'Number)
               :args $ [] 'Number 'Number
-        |dbt:f9-trace $ %{} 'CodeEntry (:doc |)
+        'dbt:f9-trace $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:f9-trace (x)
               &call-dylib-edn
@@ -121,7 +121,7 @@
           :schema $ :: 'Fn
             {} (:return 'Number)
               :args $ [] 'Number
-        |dbt:format $ %{} 'CodeEntry (:doc |)
+        'dbt:format $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:format (x)
               &call-dylib-edn
@@ -131,7 +131,7 @@
           :schema $ :: 'Fn
             {} (:return 'String)
               :args $ [] 'Buffer
-        |dbt:from-digit $ %{} 'CodeEntry (:doc |)
+        'dbt:from-digit $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:from-digit (x)
               &call-dylib-edn
@@ -141,7 +141,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Number
-        |dbt:from-float $ %{} 'CodeEntry (:doc |)
+        'dbt:from-float $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:from-float (x y)
               &call-dylib-edn
@@ -151,7 +151,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Number 'Number
-        |dbt:move-by $ %{} 'CodeEntry (:doc |)
+        'dbt:move-by $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:move-by (x places)
               &call-dylib-edn
@@ -161,7 +161,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Buffer 'Number
-        |dbt:mul $ %{} 'CodeEntry (:doc |)
+        'dbt:mul $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:mul (x y)
               &call-dylib-edn
@@ -171,7 +171,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Buffer 'Buffer
-        |dbt:norm $ %{} 'CodeEntry (:doc |)
+        'dbt:norm $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:norm (x)
               &call-dylib-edn
@@ -181,7 +181,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Buffer
-        |dbt:parse $ %{} 'CodeEntry (:doc |)
+        'dbt:parse $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:parse (s)
               &call-dylib-edn
@@ -191,7 +191,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'String
-        |dbt:pow $ %{} 'CodeEntry (:doc |)
+        'dbt:pow $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:pow (x exponent)
               &call-dylib-edn
@@ -201,7 +201,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Buffer 'Number
-        |dbt:round $ %{} 'CodeEntry (:doc |)
+        'dbt:round $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:round (x n)
               &call-dylib-edn
@@ -211,7 +211,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Buffer 'Number
-        |dbt:sub $ %{} 'CodeEntry (:doc |)
+        'dbt:sub $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:sub (x y)
               &call-dylib-edn
@@ -221,7 +221,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Buffer 'Buffer
-        |dbt:to-buffer $ %{} 'CodeEntry (:doc |)
+        'dbt:to-buffer $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:to-buffer (x)
               &call-dylib-edn
@@ -231,7 +231,7 @@
           :schema $ :: 'Fn
             {} (:return 'Buffer)
               :args $ [] 'Buffer
-        |dbt:to-digits $ %{} 'CodeEntry (:doc |)
+        'dbt:to-digits $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:to-digits (x)
               &call-dylib-edn
@@ -242,7 +242,7 @@
             {}
               :args $ [] 'Buffer
               :return $ :: 'List (:: 'List 'Number)
-        |dbt:to-float $ %{} 'CodeEntry (:doc |)
+        'dbt:to-float $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn dbt:to-float (x)
               &call-dylib-edn
@@ -253,7 +253,7 @@
             {}
               :args $ [] 'Buffer
               :return $ :: 'List 'Number
-        |lib-path $ %{} 'CodeEntry (:doc |)
+        'lib-path $ %{} 'CodeEntry (:doc |)
           :code $ quote (def lib-path |/dylibs/libcalcit_dbt)
           :examples $ []
           :schema $ :: 'String
@@ -262,9 +262,9 @@
           ns dbt.core $ :require
             dbt.$meta :refer $ calcit-dirname
             dbt.util :refer $ get-dylib-ext or-current-path
-    |dbt.main $ %{} 'FileEntry
+    'dbt.main $ %{} 'FileEntry
       :defs $ {}
-        |assert-dbt= $ %{} 'CodeEntry (:doc |)
+        'assert-dbt= $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defmacro assert-dbt= (a b)
               quasiquote $ &let ()
@@ -280,7 +280,7 @@
               :capabilities $ #{}
               :expansion $ :: 'Expr 'Unit
               :required $ [] (:: 'Expr 'Buffer) (:: 'Expr 'Buffer)
-        |main! $ %{} 'CodeEntry (:doc |)
+        'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn main! ()
               println $ dbt:format
@@ -299,14 +299,14 @@
           :schema $ :: 'Fn
             {} (:return 'Unit)
               :args $ []
-        |reload! $ %{} 'CodeEntry (:doc |)
+        'reload! $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn reload! () (println "|Reloaded dbt") &unit
           :examples $ []
           :schema $ :: 'Fn
             {} (:return 'Unit)
               :args $ []
-        |run-tests $ %{} 'CodeEntry (:doc |)
+        'run-tests $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn run-tests () (println "|run tests")
               assert= (dbt 1) (dbt 1)
@@ -376,9 +376,9 @@
         :code $ quote
           ns dbt.main $ :require
             dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit dbt:equal
-    |dbt.util $ %{} 'FileEntry
+    'dbt.util $ %{} 'FileEntry
       :defs $ {}
-        |get-dylib-ext $ %{} 'CodeEntry (:doc |)
+        'get-dylib-ext $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defmacro get-dylib-ext () $ case-default (&get-os) |.so (:macos |.dylib) (:windows |.dll)
           :examples $ []
@@ -387,7 +387,7 @@
               :capabilities $ #{} :platform-read
               :expansion $ :: 'Expr 'String
               :required $ []
-        |or-current-path $ %{} 'CodeEntry (:doc |)
+        'or-current-path $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn or-current-path (p)
               if (blank? p) |. p
