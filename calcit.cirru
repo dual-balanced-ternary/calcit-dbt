@@ -1,7 +1,10 @@
 
-{} (:about "|Machine-generated snapshot. Do not edit directly — changes will be overwritten. Use `calcit query` to inspect and `calcit edit`/`calcit tree` to modify. Run `calcit docs agents --contract` before mutations; use `--full` for first orientation or changed contract digest. Manual edits must follow format and schema conventions, then run `calcit edit format`.") (:package |dbt)
-  :entries $ {}
-    :default $ {} (:description |) (:init-fn 'dbt.main/main!) (:mode :native) (:reload-fn 'dbt.main/reload!)
+{}
+  :about "|Machine-generated snapshot. Do not edit directly — changes will be overwritten. Use `calcit query` to inspect and `calcit edit`/`calcit tree` to modify. Run `calcit docs agents --contract` before mutations; use `--full` for first orientation or changed contract digest. Manual edits must follow format and schema conventions, then run `calcit edit format`."
+  :package |dbt
+  :entries $ {} $ :default
+    {} (:description |) (:init-fn 'dbt.main/main!) (:mode :native)
+      :reload-fn 'dbt.main/reload!
       :feature-policy $ {}
       :modules $ []
       :type-slots $ {}
@@ -9,391 +12,333 @@
     'dbt.core $ %{} 'FileEntry
       :defs $ {}
         'dbt $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defmacro dbt (x)
-              let
-                  s $ turn-string x
-                  v $ if (starts-with? s |&) s (str |& s)
-                quasiquote $ dbt:parse ~v
+          :code $ quote $ defmacro dbt (x)
+            let
+                s $ turn-string x
+                v $ if (starts-with? s |&) s $ str |& s
+              quasiquote $ dbt:parse ~v
           :examples $ []
-          :schema $ :: 'Macro
-            {}
-              :capabilities $ #{}
-              :expansion $ :: 'Expr 'Buffer
-              :required $ [] 'Syntax
+          :schema $ :: 'Macro $ {}
+            :capabilities $ #{}
+            :expansion $ :: 'Expr 'Buffer
+            :required $ [] 'Syntax
         'dbt:add $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:add (x y)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_add x y
+          :code $ quote $ defn dbt:add (x y)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_add x y
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Buffer 'Buffer
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Buffer 'Buffer
         'dbt:conjugate $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:conjugate (x)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_conjugate x
+          :code $ quote $ defn dbt:conjugate (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_conjugate x
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Buffer
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Buffer
         'dbt:div $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:div (x y)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_div x y
+          :code $ quote $ defn dbt:div (x y)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_div x y
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Buffer 'Buffer
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Buffer 'Buffer
         'dbt:equal $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:equal (x y)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_equal x y
+          :code $ quote $ defn dbt:equal (x y)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_equal x y
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Bool)
-              :args $ [] 'Buffer 'Buffer
+          :schema $ :: 'Fn $ {} (:return 'Bool)
+            :args $ [] 'Buffer 'Buffer
         'dbt:f9-add $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:f9-add (x y)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_f9_add x y
+          :code $ quote $ defn dbt:f9-add (x y)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_f9_add x y
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Number)
-              :args $ [] 'Number 'Number
+          :schema $ :: 'Fn $ {} (:return 'Number)
+            :args $ [] 'Number 'Number
         'dbt:f9-inverse $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:f9-inverse (x)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_f9_inverse x
+          :code $ quote $ defn dbt:f9-inverse (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_f9_inverse x
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Number)
-              :args $ [] 'Number
+          :schema $ :: 'Fn $ {} (:return 'Number)
+            :args $ [] 'Number
         'dbt:f9-mul $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:f9-mul (x y)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_f9_mul x y
+          :code $ quote $ defn dbt:f9-mul (x y)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_f9_mul x y
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Number)
-              :args $ [] 'Number 'Number
+          :schema $ :: 'Fn $ {} (:return 'Number)
+            :args $ [] 'Number 'Number
         'dbt:f9-norm $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:f9-norm (x)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_f9_norm x
+          :code $ quote $ defn dbt:f9-norm (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_f9_norm x
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Number)
-              :args $ [] 'Number
+          :schema $ :: 'Fn $ {} (:return 'Number)
+            :args $ [] 'Number
         'dbt:f9-pow $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:f9-pow (x exponent)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_f9_pow x exponent
+          :code $ quote $ defn dbt:f9-pow (x exponent)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_f9_pow x exponent
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Number)
-              :args $ [] 'Number 'Number
+          :schema $ :: 'Fn $ {} (:return 'Number)
+            :args $ [] 'Number 'Number
         'dbt:f9-trace $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:f9-trace (x)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_f9_trace x
+          :code $ quote $ defn dbt:f9-trace (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_f9_trace x
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Number)
-              :args $ [] 'Number
+          :schema $ :: 'Fn $ {} (:return 'Number)
+            :args $ [] 'Number
         'dbt:format $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:format (x)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_format x
+          :code $ quote $ defn dbt:format (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_format x
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'String)
-              :args $ [] 'Buffer
+          :schema $ :: 'Fn $ {} (:return 'String)
+            :args $ [] 'Buffer
         'dbt:from-digit $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:from-digit (x)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_from_digit x
+          :code $ quote $ defn dbt:from-digit (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_from_digit x
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Number
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Number
         'dbt:from-float $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:from-float (x y)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_from_float x y
+          :code $ quote $ defn dbt:from-float (x y)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_from_float x y
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Number 'Number
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Number 'Number
         'dbt:move-by $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:move-by (x places)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_move_by x places
+          :code $ quote $ defn dbt:move-by (x places)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_move_by x places
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Buffer 'Number
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Buffer 'Number
         'dbt:mul $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:mul (x y)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_mul x y
+          :code $ quote $ defn dbt:mul (x y)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_mul x y
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Buffer 'Buffer
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Buffer 'Buffer
         'dbt:norm $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:norm (x)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_norm x
+          :code $ quote $ defn dbt:norm (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_norm x
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Buffer
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Buffer
         'dbt:parse $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:parse (s)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_parse s
+          :code $ quote $ defn dbt:parse (s)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_parse s
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'String
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'String
         'dbt:pow $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:pow (x exponent)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_pow x exponent
+          :code $ quote $ defn dbt:pow (x exponent)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_pow x exponent
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Buffer 'Number
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Buffer 'Number
         'dbt:round $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:round (x n)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_round x n
+          :code $ quote $ defn dbt:round (x n)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_round x n
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Buffer 'Number
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Buffer 'Number
         'dbt:sub $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:sub (x y)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_sub x y
+          :code $ quote $ defn dbt:sub (x y)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_sub x y
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Buffer 'Buffer
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Buffer 'Buffer
         'dbt:to-buffer $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:to-buffer (x)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_to_buffer x
+          :code $ quote $ defn dbt:to-buffer (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_to_buffer x
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Buffer)
-              :args $ [] 'Buffer
+          :schema $ :: 'Fn $ {} (:return 'Buffer)
+            :args $ [] 'Buffer
         'dbt:to-digits $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:to-digits (x)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_to_digits x
+          :code $ quote $ defn dbt:to-digits (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_to_digits x
           :examples $ []
-          :schema $ :: 'Fn
-            {}
-              :args $ [] 'Buffer
-              :return $ :: 'List (:: 'List 'Number)
+          :schema $ :: 'Fn $ {}
+            :args $ [] 'Buffer
+            :return $ :: 'List $ :: 'List 'Number
         'dbt:to-float $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn dbt:to-float (x)
-              &call-dylib-edn
-                str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
-                , |dbt_to_float x
+          :code $ quote $ defn dbt:to-float (x)
+            &call-dylib-edn
+              str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
+              , |dbt_to_float x
           :examples $ []
-          :schema $ :: 'Fn
-            {}
-              :args $ [] 'Buffer
-              :return $ :: 'List 'Number
+          :schema $ :: 'Fn $ {}
+            :args $ [] 'Buffer
+            :return $ :: 'List 'Number
         'lib-path $ %{} 'CodeEntry (:doc |)
-          :code $ quote (def lib-path |/dylibs/libcalcit_dbt)
+          :code $ quote $ def lib-path |/dylibs/libcalcit_dbt
           :examples $ []
           :schema $ :: 'String
       :ns $ %{} 'NsEntry (:doc |)
-        :code $ quote
-          ns dbt.core $ :require
+        :code $ quote $ ns dbt.core
+          :require
             dbt.$meta :refer $ calcit-dirname
             dbt.util :refer $ get-dylib-ext or-current-path
     'dbt.main $ %{} 'FileEntry
       :defs $ {}
         'assert-dbt= $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defmacro assert-dbt= (a b)
-              quasiquote $ &let ()
-                println $ ~
-                  str-spaced |comparing (format-to-lisp a) |to $ format-to-lisp b
-                if
-                  not $ dbt:equal ~a ~b
-                  raise $ ~
-                    str-spaced |failed (format-to-lisp a) "|to match" $ format-to-lisp b
+          :code $ quote $ defmacro assert-dbt= (a b)
+            quasiquote $ &let ()
+              println $ ~ $ str-spaced |comparing (format-to-lisp a) |to (format-to-lisp b)
+              if
+                not $ dbt:equal ~a ~b
+                raise $ ~ $ str-spaced |failed (format-to-lisp a) "|to match" (format-to-lisp b)
           :examples $ []
-          :schema $ :: 'Macro
-            {}
-              :capabilities $ #{}
-              :expansion $ :: 'Expr 'Unit
-              :required $ [] (:: 'Expr 'Buffer) (:: 'Expr 'Buffer)
+          :schema $ :: 'Macro $ {}
+            :capabilities $ #{}
+            :expansion $ :: 'Expr 'Unit
+            :required $ [] (:: 'Expr 'Buffer) (:: 'Expr 'Buffer)
         'main! $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn main! ()
-              println $ dbt:format
-                w-log $ dbt 13.23
-              println $ dbt:format
-                dbt:add (dbt 13.23) (dbt 6.6)
-              println $ dbt:format
-                dbt:add (dbt 6) (dbt 6)
-              println $ dbt:format
-                dbt:round (dbt 13.23) 0
-              println $ dbt:to-digits (dbt 13.23)
-              assert= (dbt 1) (dbt:from-digit 1)
-              assert= (dbt 8) (dbt:from-digit 8)
-              run-tests
+          :code $ quote $ defn main! ()
+            println $ dbt:format $ w-log (dbt 13.23)
+            println $ dbt:format $ dbt:add (dbt 13.23) (dbt 6.6)
+            println $ dbt:format $ dbt:add (dbt 6) (dbt 6)
+            println $ dbt:format $ dbt:round (dbt 13.23) 0
+            println $ dbt:to-digits $ dbt 13.23
+            assert= (dbt 1) (dbt:from-digit 1)
+            assert= (dbt 8) (dbt:from-digit 8)
+            run-tests
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Unit)
-              :args $ []
+          :schema $ :: 'Fn $ {} (:return 'Unit)
+            :args $ []
         'reload! $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn reload! () (println "|Reloaded dbt") &unit
+          :code $ quote $ defn reload! () (println "|Reloaded dbt") &unit
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Unit)
-              :args $ []
+          :schema $ :: 'Fn $ {} (:return 'Unit)
+            :args $ []
         'run-tests $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn run-tests () (println "|run tests")
-              assert= (dbt 1) (dbt 1)
-              assert= (dbt 1.3) (dbt 1.3)
-              assert=
+          :code $ quote $ defn run-tests () (println "|run tests")
+            assert= (dbt 1) (dbt 1)
+            assert= (dbt 1.3) (dbt 1.3)
+            assert=
+              dbt:add (dbt 1) (dbt 1)
+              dbt 19
+            assert=
+              dbt:add
                 dbt:add (dbt 1) (dbt 1)
-                dbt 19
-              assert=
-                dbt:add
-                  dbt:add (dbt 1) (dbt 1)
-                  dbt 1
-                dbt 15
-              assert=
-                -> (dbt 1)
-                  dbt:add $ dbt 1
-                  dbt:add $ dbt 1
-                  dbt:add $ dbt 1
-                dbt 11
-              assert=
-                dbt:sub (dbt 44) (dbt 6)
-                dbt 466
-              assert=
-                dbt:to-float $ dbt 33
-                [] 4 0
-              assert=
-                dbt:to-float $ dbt 66
-                [] -4 4
-              assert= (dbt:from-float 4 4) (dbt 88)
-              assert=
-                dbt:round (dbt 3.333) 2
-                dbt 3.33
-              assert=
-                dbt:div (dbt 11) (dbt 19)
-                dbt 19
-              assert=
-                dbt:mul (dbt 19) (dbt 19)
-                dbt 11
-              assert=
-                dbt:format $ dbt.core/dbt:to-buffer (dbt 88)
-                , |&88
-              assert=
-                dbt.core/dbt:format $ dbt.core/dbt:conjugate (dbt 8)
-                , |&6
-              assert=
-                dbt.core/dbt:format $ dbt.core/dbt:norm (dbt 8)
-                , |&19
-              assert=
-                dbt.core/dbt:format $ dbt.core/dbt:pow (dbt 8) 4
-                , |&99
-              assert=
-                dbt.core/dbt:format $ dbt.core/dbt:move-by (dbt 1.2) 2
-                , |&125
-              assert= (dbt.core/dbt:f9-mul 8 8) 7
-              assert= (dbt.core/dbt:f9-pow 8 8) 1
-              assert=
-                dbt.core/dbt:f9-mul 8 $ dbt.core/dbt:f9-inverse 8
-                , 1
-              assert= (dbt.core/dbt:f9-trace 8) 9
-              assert= (dbt.core/dbt:f9-norm 8) 9
-              println "|Passed test."
-              , &unit
+                dbt 1
+              dbt 15
+            assert=
+              -> (dbt 1)
+                dbt:add $ dbt 1
+                dbt:add $ dbt 1
+                dbt:add $ dbt 1
+              dbt 11
+            assert=
+              dbt:sub (dbt 44) (dbt 6)
+              dbt 466
+            assert=
+              dbt:to-float $ dbt 33
+              [] 4 0
+            assert=
+              dbt:to-float $ dbt 66
+              [] -4 4
+            assert= (dbt:from-float 4 4) (dbt 88)
+            assert=
+              dbt:round (dbt 3.333) 2
+              dbt 3.33
+            assert=
+              dbt:div (dbt 11) (dbt 19)
+              dbt 19
+            assert=
+              dbt:mul (dbt 19) (dbt 19)
+              dbt 11
+            assert=
+              dbt:format $ dbt.core/dbt:to-buffer $ dbt 88
+              , |&88
+            assert=
+              dbt.core/dbt:format $ dbt.core/dbt:conjugate $ dbt 8
+              , |&6
+            assert=
+              dbt.core/dbt:format $ dbt.core/dbt:norm $ dbt 8
+              , |&19
+            assert=
+              dbt.core/dbt:format $ dbt.core/dbt:pow (dbt 8) 4
+              , |&99
+            assert=
+              dbt.core/dbt:format $ dbt.core/dbt:move-by (dbt 1.2) 2
+              , |&125
+            assert=
+              dbt.core/dbt:f9-mul 8 8
+              , 7
+            assert=
+              dbt.core/dbt:f9-pow 8 8
+              , 1
+            assert=
+              dbt.core/dbt:f9-mul 8 $ dbt.core/dbt:f9-inverse 8
+              , 1
+            assert=
+              dbt.core/dbt:f9-trace 8
+              , 9
+            assert=
+              dbt.core/dbt:f9-norm 8
+              , 9
+            println "|Passed test."
+            , &unit
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'Unit)
-              :args $ []
+          :schema $ :: 'Fn $ {} (:return 'Unit)
+            :args $ []
       :ns $ %{} 'NsEntry (:doc |)
-        :code $ quote
-          ns dbt.main $ :require
-            dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit dbt:equal
+        :code $ quote $ ns dbt.main
+          :require $ dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit dbt:equal
     'dbt.util $ %{} 'FileEntry
       :defs $ {}
         'get-dylib-ext $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defmacro get-dylib-ext () $ case-default (&get-os) |.so (:macos |.dylib) (:windows |.dll)
+          :code $ quote $ defmacro get-dylib-ext ()
+            case-default (&get-os) |.so (:macos |.dylib) (:windows |.dll)
           :examples $ []
-          :schema $ :: 'Macro
-            {}
-              :capabilities $ #{} :platform-read
-              :expansion $ :: 'Expr 'String
-              :required $ []
+          :schema $ :: 'Macro $ {}
+            :capabilities $ #{} :platform-read
+            :expansion $ :: 'Expr 'String
+            :required $ []
         'or-current-path $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            defn or-current-path (p)
-              if (blank? p) |. p
+          :code $ quote $ defn or-current-path (p)
+            if (blank? p) |. p
           :examples $ []
-          :schema $ :: 'Fn
-            {} (:return 'String)
-              :args $ [] 'String
+          :schema $ :: 'Fn $ {} (:return 'String)
+            :args $ [] 'String
       :ns $ %{} 'NsEntry (:doc |)
-        :code $ quote (ns dbt.util)
+        :code $ quote $ ns dbt.util
