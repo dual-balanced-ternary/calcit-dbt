@@ -3,8 +3,7 @@
   :about "|Machine-generated snapshot. Do not edit directly — changes will be overwritten. Use `calcit query` to inspect and `calcit edit`/`calcit tree` to modify. Run `calcit docs agents --contract` before mutations; use `--full` for first orientation or changed contract digest. Manual edits must follow format and schema conventions, then run `calcit edit format`."
   :package |dbt
   :entries $ {} $ :default
-    {} (:description |) (:init-fn 'dbt.main/main!) (:mode :native)
-      :reload-fn 'dbt.main/reload!
+    {} (:description |) (:init-fn 'dbt.main/main!) (:mode :native) (:reload-fn 'dbt.main/reload!)
       :feature-policy $ {}
       :modules $ []
       :type-slots $ {}
@@ -301,21 +300,13 @@
             assert=
               dbt.core/dbt:format $ dbt.core/dbt:move-by (dbt 1.2) 2
               , |&125
-            assert=
-              dbt.core/dbt:f9-mul 8 8
-              , 7
-            assert=
-              dbt.core/dbt:f9-pow 8 8
-              , 1
+            assert= (dbt.core/dbt:f9-mul 8 8) 7
+            assert= (dbt.core/dbt:f9-pow 8 8) 1
             assert=
               dbt.core/dbt:f9-mul 8 $ dbt.core/dbt:f9-inverse 8
               , 1
-            assert=
-              dbt.core/dbt:f9-trace 8
-              , 9
-            assert=
-              dbt.core/dbt:f9-norm 8
-              , 9
+            assert= (dbt.core/dbt:f9-trace 8) 9
+            assert= (dbt.core/dbt:f9-norm 8) 9
             println "|Passed test."
             , &unit
           :examples $ []
