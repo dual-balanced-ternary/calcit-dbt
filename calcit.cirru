@@ -3,7 +3,7 @@
   :about "|Machine-generated snapshot. Do not edit directly — changes will be overwritten. Use `calcit query` to inspect and `calcit edit`/`calcit tree` to modify. Run `calcit docs agents --contract` before mutations; use `--full` for first orientation or changed contract digest. Manual edits must follow format and schema conventions, then run `calcit edit format`."
   :package |dbt
   :entries $ {} $ :default
-    {} (:description |) (:init-fn 'dbt.main/main!) (:mode :native) (:reload-fn 'dbt.main/reload!)
+    {} (:description |) (:init-fn 'dbt.main/main!) (:mode :native) (:reload-fn 'dbt.main/reload!) (:target :native)
       :feature-policy $ {}
       :modules $ []
       :type-slots $ {}
@@ -13,7 +13,15 @@
         'dbt $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defmacro dbt (x)
             let
-                s $ turn-string x
+                s $ cond
+                    string? x
+                    , x
+                  (number? x) (to-string x)
+                  (symbol? x) (to-string x)
+                  (tag? x) (to-string x)
+                  (bool? x) (to-string x)
+                  (nil? x) |
+                  true $ raise "|dbt expects a scalar literal; expressions are not evaluated"
                 v $ if (starts-with? s |&) s $ str |& s
               quasiquote $ dbt:parse ~v
           :examples $ []
