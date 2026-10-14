@@ -55,12 +55,12 @@ jobs:
       - name: Validate canonical typed snapshot
         run: |
           set -euo pipefail
-          test "$(calcit --version)" = "0.28.0"
+          test "$(calcit --version)" = "0.29.3"
           calcit calcit.cirru edit format
           git diff --exit-code -- calcit.cirru
           calcit calcit.cirru --check-only
           calcit calcit.cirru analyze quality
-          calcit calcit.cirru analyze dynamic-methods --summary-only --format json | jq -e '.data.summary.findings == 0'
-          calcit calcit.cirru analyze check-public --ns dbt.core --ns dbt.main --ns dbt.util --summary-only --format json
+          calcit calcit.cirru analyze weak-types --only dynamic-method --summary-only --format json | jq -e '.data.summary.findings == 0'
+          calcit calcit.cirru --check-only --ns dbt.core --ns dbt.main --ns dbt.util --summary-only --format json
 
       - run: calcit calcit.cirru
