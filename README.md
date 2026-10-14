@@ -12,13 +12,32 @@ The native extension uses C-safe buffer protocol v1 from
 than duplicating descriptors, Cirru EDN transport, panic isolation, and buffer
 ownership locally.
 
+## 使用者影响 / User impact
+
+候选 Git 模块 0.1.4 配对正式 Calcit 0.29.3；Rust 运算、C-safe 协议和现有
+Buffer/Number/String/Bool/List API 保持不变。23 个动态库返回边界使用现有
+`decode-map-as` 校验，不再只依赖返回 schema；错误形状会立即报错，不转换、
+补默认值或静默接受。标量/Buffer 检查不做文本序列化，列表结果会递归检查并重建，
+有与元素数量相关的开销。此项目仍是 native-only，不新增 JS/WASM 或 COS 支持。
+
+Candidate Git module 0.1.4 pairs with formal Calcit 0.29.3. Rust arithmetic,
+the C-safe protocol and the existing public value types are unchanged. The 23
+native return boundaries now use the existing `decode-map-as` checker. Invalid
+shapes raise instead of being trusted or coerced; scalar/Buffer checks do not
+serialize text, while list checking/reconstruction costs scale with element count.
+This remains a native-only binding, without new JS/WASM or COS support.
+
 ## API
 
 ```cirru
+ns app.main $ :require
+  dbt.core :refer $ dbt dbt:format dbt:round dbt:add dbt:sub dbt:mul dbt:div dbt:conjugate dbt:norm dbt:pow dbt:move-by dbt:f9-add dbt:f9-mul dbt:f9-inverse dbt:f9-pow dbt:f9-trace dbt:f9-norm dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit dbt:equal
+
 dbt 1.2
 
 dbt:format $ dbt 1.2
-dbt:round (dbt 1.234) 2 ; precision is explicit
+; precision is explicit
+dbt:round (dbt 1.234) 2
 
 dbt:add (dbt 1.2) (dbt 3.4)
 dbt:sub (dbt 1.2) (dbt 3.4)
@@ -45,7 +64,7 @@ dbt:from-digit 8
 ; lossless transport through Cirru EDN Buffer
 dbt.core/dbt:to-buffer $ dbt 12.34
 
-dbt:equal a b
+dbt:equal (dbt 1) (dbt 1)
 ```
 
 DBT 值在 Calcit 中统一使用 lossless `Buffer` 表示，因此可安全穿过 C ABI、保存或
@@ -59,8 +78,8 @@ already a DBT value. `dbt:round` now requires an explicit precision.
 
 ## Development
 
-开发工具链使用 Rust 1.85+ 和正式 Calcit 0.28.0，不再固定旧 alpha。
-Development uses Rust 1.85+ and stable Calcit 0.28.0 rather than the previous alpha.
+开发工具链使用 Rust 1.85+ 和正式 Calcit 0.29.3，不再固定旧 alpha。
+Development uses Rust 1.85+ and stable Calcit 0.29.3 rather than the previous alpha.
 
 ```bash
 cargo fmt -- --check
@@ -71,8 +90,8 @@ bash scripts/check-c-safe-ffi.sh
 caps --strict --ci
 calcit --check-only
 calcit analyze quality
-calcit analyze dynamic-methods --summary-only --format json | jq -e '.data.summary.findings == 0'
-calcit analyze check-public --ns dbt.core --ns dbt.main --ns dbt.util --summary-only --format json
+calcit analyze weak-types --only dynamic-method --summary-only --format json | jq -e '.data.summary.findings == 0'
+calcit --check-only --ns dbt.core --ns dbt.main --ns dbt.util --summary-only --format json
 calcit
 ```
 
@@ -97,6 +116,12 @@ CI 保留原 Rust 测试、strict Clippy、25 个 C-safe 导出审计和真实 d
 CI retains the Rust tests, strict Clippy, 25-symbol C-safe audit and real dylib
 smoke, plus all 31 public definitions and zero-debt gates. This native-only
 binding has no frontend assets and needs no COS/CDN workflow or extra test scripts.
+
+原 `analyze quality` strict-zero 门禁暂时保留，不因入口弃用而删除零债务要求；
+已移除未被 CI 使用且记录旧债务的 baseline 文件。两个旧调用改为 `dbg` 和 `match`。
+The existing `analyze quality` strict-zero gate is retained despite its CLI
+deprecation; the unused historical debt baseline is removed. Deprecated calls
+now use `dbg` and `match`.
 
 ## License
 
