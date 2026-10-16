@@ -14,18 +14,27 @@ ownership locally.
 
 ## 使用者影响 / User impact
 
-候选 Git 模块 0.1.4 配对正式 Calcit 0.29.3；Rust 运算、C-safe 协议和现有
+候选 Git 模块 0.1.5 配对正式 Calcit 0.30.0；Rust 运算、C-safe 协议和现有
 Buffer/Number/String/Bool/List API 保持不变。23 个动态库返回边界使用现有
 `decode-map-as` 校验，不再只依赖返回 schema；错误形状会立即报错，不转换、
 补默认值或静默接受。标量/Buffer 检查不做文本序列化，列表结果会递归检查并重建，
 有与元素数量相关的开销。此项目仍是 native-only，不新增 JS/WASM 或 COS 支持。
 
-Candidate Git module 0.1.4 pairs with formal Calcit 0.29.3. Rust arithmetic,
+Candidate Git module 0.1.5 pairs with formal Calcit 0.30.0. Rust arithmetic,
 the C-safe protocol and the existing public value types are unchanged. The 23
 native return boundaries now use the existing `decode-map-as` checker. Invalid
 shapes raise instead of being trusted or coerced; scalar/Buffer checks do not
 serialize text, while list checking/reconstruction costs scale with element count.
 This remains a native-only binding, without new JS/WASM or COS support.
+
+本次从 0.1.4 升级只更新 Calcit 工具链与完整 strict 门禁，不修改 Snapshot、
+Rust 源码或原断言。仍需先构建本平台 dylib；Rust crate 没有变更，不重复发布 crate。
+正式 module tag 发布前不要引用候选版本，也不将生产依赖固定为 alpha。
+
+This upgrade from 0.1.4 only updates the Calcit toolchain and complete strict gate;
+the Snapshot, Rust sources and original assertions are unchanged. Build the native
+dylib first. The Rust crate is unchanged and is not being republished. Do not pin
+an unreleased module candidate or use an alpha toolchain for this stable update.
 
 ## API
 
@@ -78,8 +87,8 @@ already a DBT value. `dbt:round` now requires an explicit precision.
 
 ## Development
 
-开发工具链使用 Rust 1.85+ 和正式 Calcit 0.29.3，不再固定旧 alpha。
-Development uses Rust 1.85+ and stable Calcit 0.29.3 rather than the previous alpha.
+开发工具链使用 Rust 1.85+ 和正式 Calcit 0.30.0，不再固定旧 alpha。
+Development uses Rust 1.85+ and stable Calcit 0.30.0 rather than the previous alpha.
 
 ```bash
 cargo fmt -- --check
@@ -88,7 +97,7 @@ cargo test --all-targets
 ./build.sh
 bash scripts/check-c-safe-ffi.sh
 caps --strict --ci
-calcit --check-only
+calcit fix --workflow strict --verify --format edn
 calcit analyze quality
 calcit analyze weak-types --only dynamic-method --summary-only --format json | jq -e '.data.summary.findings == 0'
 calcit --check-only --ns dbt.core --ns dbt.main --ns dbt.util --summary-only --format json
@@ -111,7 +120,7 @@ Public operations retain the Buffer/Number/String/Bool/Unit contracts.
 
 CI 保留原 Rust 测试、strict Clippy、25 个 C-safe 导出审计和真实 dylib smoke，
 并检查全部 31 个公开定义、零质量债务和零动态方法。纯原生绑定没有前端资源，
-不新增 COS/CDN 配置、固定 fix workflow 或额外测试脚本。
+不新增 COS/CDN 配置、固定改写规则或额外测试脚本。
 
 CI retains the Rust tests, strict Clippy, 25-symbol C-safe audit and real dylib
 smoke, plus all 31 public definitions and zero-debt gates. This native-only
