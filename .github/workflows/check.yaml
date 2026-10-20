@@ -21,12 +21,6 @@ jobs:
         with:
           path: calcit-dbt
 
-      # The path dependency is checked out as a sibling, matching local development.
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: dual-balanced-ternary/dual_balanced_ternary.rs
-          path: dual_balanced_ternary.rs
-
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy, rustfmt
@@ -55,11 +49,13 @@ jobs:
       - name: Validate canonical typed snapshot
         run: |
           set -euo pipefail
-          test "$(calcit --version)" = "0.30.0"
+          test "$(calcit --version)" = "0.30.1-alpha.5"
           calcit calcit.cirru edit format
           git diff --exit-code -- calcit.cirru
           calcit calcit.cirru fix --workflow strict --verify --format edn
-          calcit calcit.cirru analyze quality
+          calcit analyze weak-types --only coverage --summary-only --format json | jq -e '.data.summary.levels.none == 0 and .data.summary.levels.partial == 0'
+          calcit analyze weak-types --only unsafe-coerce,schema-dynamic,unresolved-type-slot,code-dynamic,code-nil --summary-only --format json | jq -e '.data.summary.hits == 0'
+          calcit analyze weak-types --only deprecated-call --summary-only --format json | jq -e '.data.summary.calls == 0'
           calcit calcit.cirru analyze weak-types --only dynamic-method --summary-only --format json | jq -e '.data.summary.findings == 0'
           calcit calcit.cirru --check-only --ns dbt.core --ns dbt.main --ns dbt.util --summary-only --format json
 
