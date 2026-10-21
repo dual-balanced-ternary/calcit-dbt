@@ -14,15 +14,16 @@ ownership locally.
 
 ## 使用者影响 / User impact
 
-本轮候选工具链为已发布的 Calcit 0.30.1-alpha.5；模块仍为尚未发 tag 的 0.1.5，
-Rust crate 版本保持 0.1.1，不修改数学实现、Snapshot 或 Buffer API，也不重新发 crate。
-截至 2026-10-21（Asia/Shanghai；UTC 日期为 2026-10-20），正式 0.30.1 release
-尚无 macOS 资产，不能把本轮验收称为正式版跨平台验证。调用方继续先构建本平台动态库。
+模块 `0.1.5` 候选配对正式 Calcit **0.30.1**，不再依赖 alpha；发布状态以同名
+Git tag 为准。调用方需同步 CLI 并先构建本平台动态库，不将 Linux CI 视为所有平台
+已有正式预编译 CLI 或均已验收。本模块仅支持 native，没有 JS runtime 或前端资源。
+Rust crate 仍为 `0.1.1`，数学实现、Snapshot、Buffer API 与原断言不变，不重复发布 crate。
 
-This candidate uses published Calcit 0.30.1-alpha.5, not a stable 0.30.1
-cross-platform certification: the formal release has no macOS asset at the time
-of validation. Module 0.1.5 is still untagged; the Rust crate version (0.1.1), arithmetic,
-Snapshot and Buffer API are unchanged. Build the platform dylib before use.
+Candidate Git module `0.1.5` pairs with formal Calcit **0.30.1**, not an alpha;
+check the matching Git tag for publication. Update the CLI and build the platform
+dylib first. Linux CI does not certify every platform or promise prebuilt CLI assets.
+This is native-only, without a JS runtime or frontend assets. Rust crate `0.1.1`,
+arithmetic, Snapshot, Buffer API and original assertions are unchanged; no crate republication.
 
 独立构建不再要求仓库外的 `../dual_balanced_ternary.rs`：改用精确的 crates.io 正式
 `dual_balanced_ternary =0.2.0`。已核对发布包的全部数学源码和测试与基线兄弟仓库一致，
@@ -44,39 +45,36 @@ deprecated-call views without weakening its zero-debt requirements. The original
 dynamic-method gate remains. No new checker script, compiler rule or COS workflow
 is added.
 
-本地两版 CLI 均通过完整 strict、公开定义 31/31、全定义 33/33（含元数据）；
-新动态库下原入口的 24 个断言与完整输出保持一致。原 Rust 六项集成测试、fmt、
-strict Clippy、release 构建及 25 个 C-safe 导出审计通过。Linux 独立安装结果以 PR CI 为准。
+原匹配 alpha.5 图的完整 strict、31/31 类型覆盖与零债务门禁、33/33 全定义
+（含元数据）和真实新建 dylib smoke 已通过；这不是正式 0.30.1 的替代证据。
+正式候选交由干净 Linux CI 验证 Caps strict/toolchain、全部定义、完整 strict、
+原 Rust 六项集成测试、fmt、strict Clippy、release 构建、25 个 C-safe 导出与原入口断言。
+不运行本地 Caps，不安装/编译 Calcit，也不用 alpha CLI 编译正式候选。
 
-Both CLIs pass complete strict checking, 31 public definitions and 33 all-def
-items including metadata. The original 24 entry assertions and full stdout are
-unchanged with the freshly built dylib. All six Rust integration tests, fmt,
-strict Clippy, release build and the 25-symbol C-safe audit pass locally; Linux
-independent-install evidence comes from PR CI.
+The original matched alpha.5 graph passes strict, full31 coverage/zero-debt gates,
+all33 definitions including metadata, and smoke with a freshly built dylib. These
+are baseline evidence, not formal0.30.1 certification. Clean Linux CI checks the
+formal toolchain, all definitions, strict, the original six Rust integration tests,
+fmt, strict Clippy, release build, 25 C-safe exports and original entry assertions.
+No local Caps or Calcit installation/build is needed; alpha compilation is not
+used as evidence for the formal candidate.
 
-### 历史：0.30.0 迁移 / Previous 0.30.0 migration
+### 已有类型与兼容合同 / Existing type and compatibility contracts
 
-候选 Git 模块 0.1.5 配对正式 Calcit 0.30.0；Rust 运算、C-safe 协议和现有
-Buffer/Number/String/Bool/List API 保持不变。23 个动态库返回边界使用现有
+Rust 运算、C-safe 协议和现有 Buffer/Number/String/Bool/List API 保持不变。
+此前 23 个动态库返回边界使用现有
 `decode-map-as` 校验，不再只依赖返回 schema；错误形状会立即报错，不转换、
 补默认值或静默接受。标量/Buffer 检查不做文本序列化，列表结果会递归检查并重建，
 有与元素数量相关的开销。此项目仍是 native-only，不新增 JS/WASM 或 COS 支持。
 
-Candidate Git module 0.1.5 pairs with formal Calcit 0.30.0. Rust arithmetic,
-the C-safe protocol and the existing public value types are unchanged. The 23
+Rust arithmetic, the C-safe protocol and existing public value types are unchanged. The 23
 native return boundaries now use the existing `decode-map-as` checker. Invalid
 shapes raise instead of being trusted or coerced; scalar/Buffer checks do not
 serialize text, while list checking/reconstruction costs scale with element count.
 This remains a native-only binding, without new JS/WASM or COS support.
 
-本次从 0.1.4 升级只更新 Calcit 工具链与完整 strict 门禁，不修改 Snapshot、
-Rust 源码或原断言。仍需先构建本平台 dylib；Rust crate 没有变更，不重复发布 crate。
-正式 module tag 发布前不要引用候选版本，也不将生产依赖固定为 alpha。
-
-This upgrade from 0.1.4 only updates the Calcit toolchain and complete strict gate;
-the Snapshot, Rust sources and original assertions are unchanged. Build the native
-dylib first. The Rust crate is unchanged and is not being republished. Do not pin
-an unreleased module candidate or use an alpha toolchain for this stable update.
+当前升级不再强制改写已通过检查的源码，也不新增强转、预算豁免或测试脚本。
+Do not force source rewrites where existing contracts pass, or add casts, budget waivers or checker scripts.
 
 ## API
 
@@ -129,8 +127,8 @@ already a DBT value. `dbt:round` now requires an explicit precision.
 
 ## Development
 
-开发工具链使用 Rust 1.85+ 和 Calcit 0.30.1-alpha.5（预发布）。
-Development uses Rust 1.85+ and Calcit 0.30.1-alpha.5 (prerelease).
+开发工具链使用 Rust 1.85+ 和正式 Calcit 0.30.1。
+Development uses Rust 1.85+ and formal Calcit 0.30.1.
 
 ```bash
 cargo fmt -- --check
@@ -139,12 +137,13 @@ cargo test --all-targets
 ./build.sh
 bash scripts/check-c-safe-ffi.sh
 caps --strict --ci
+caps deps.cirru verify --toolchain
+calcit --check-only --all-defs
 calcit fix --workflow strict --verify --format edn
 calcit analyze weak-types --only coverage --summary-only --format json | jq -e '.data.summary.levels.none == 0 and .data.summary.levels.partial == 0'
 calcit analyze weak-types --only unsafe-coerce,schema-dynamic,unresolved-type-slot,code-dynamic,code-nil --summary-only --format json | jq -e '.data.summary.hits == 0'
 calcit analyze weak-types --only deprecated-call --summary-only --format json | jq -e '.data.summary.calls == 0'
 calcit analyze weak-types --only dynamic-method --summary-only --format json | jq -e '.data.summary.findings == 0'
-calcit --check-only --ns dbt.core --ns dbt.main --ns dbt.util --summary-only --format json
 calcit
 ```
 
@@ -167,7 +166,8 @@ CI 保留原 Rust 测试、strict Clippy、25 个 C-safe 导出审计和真实 d
 不新增 COS/CDN 配置、固定改写规则或额外测试脚本。
 
 CI retains the Rust tests, strict Clippy, 25-symbol C-safe audit and real dylib
-smoke, plus all 31 public definitions and zero-debt gates. This native-only
+smoke, plus all33 definitions (including the31 public definitions and metadata)
+and zero-debt gates. Strict must pass with empty diagnostics. This native-only
 binding has no frontend assets and needs no COS/CDN workflow or extra test scripts.
 
 原零债务要求由当前 `weak-types` 视图继续执行；历史迁移已移除未被 CI 使用的旧 baseline，
