@@ -14,6 +14,48 @@ ownership locally.
 
 ## 使用者影响 / User impact
 
+本轮候选工具链为已发布的 Calcit 0.30.1-alpha.5；模块仍为尚未发 tag 的 0.1.5，
+Rust crate 版本保持 0.1.1，不修改数学实现、Snapshot 或 Buffer API，也不重新发 crate。
+截至 2026-10-21（Asia/Shanghai；UTC 日期为 2026-10-20），正式 0.30.1 release
+尚无 macOS 资产，不能把本轮验收称为正式版跨平台验证。调用方继续先构建本平台动态库。
+
+This candidate uses published Calcit 0.30.1-alpha.5, not a stable 0.30.1
+cross-platform certification: the formal release has no macOS asset at the time
+of validation. Module 0.1.5 is still untagged; the Rust crate version (0.1.1), arithmetic,
+Snapshot and Buffer API are unchanged. Build the platform dylib before use.
+
+独立构建不再要求仓库外的 `../dual_balanced_ternary.rs`：改用精确的 crates.io 正式
+`dual_balanced_ternary =0.2.0`。已核对发布包的全部数学源码和测试与基线兄弟仓库一致，
+CI 不再额外检出兄弟目录；Rust 数学行为和 crate 发布版本不变。
+独立目录解析的失败与修复跟踪 [#20](https://github.com/dual-balanced-ternary/calcit-dbt/issues/20)。
+
+Standalone builds now use the exact published `dual_balanced_ternary =0.2.0`
+crate instead of an external sibling checkout. Published math sources and tests
+are byte-identical to the baseline sibling; CI no longer supplies that directory
+([#20](https://github.com/dual-balanced-ternary/calcit-dbt/issues/20)).
+
+原 `analyze quality` 零债务要求迁到公开 `weak-types` 视图：完整覆盖、五类弱类型
+命中和弃用调用分别必须为零；动态方法门禁保留。核对了旧 gate 在该 CLI release 中
+使用的同一组 coverage/weak/deprecated 输入，没有通过删除检查或放宽预算迁移。
+不新增验证脚本、编译器规则或 COS 配置。
+
+The retired quality command is replaced by current coverage, weak-type and
+deprecated-call views without weakening its zero-debt requirements. The original
+dynamic-method gate remains. No new checker script, compiler rule or COS workflow
+is added.
+
+本地两版 CLI 均通过完整 strict、公开定义 31/31、全定义 33/33（含元数据）；
+新动态库下原入口的 24 个断言与完整输出保持一致。原 Rust 六项集成测试、fmt、
+strict Clippy、release 构建及 25 个 C-safe 导出审计通过。Linux 独立安装结果以 PR CI 为准。
+
+Both CLIs pass complete strict checking, 31 public definitions and 33 all-def
+items including metadata. The original 24 entry assertions and full stdout are
+unchanged with the freshly built dylib. All six Rust integration tests, fmt,
+strict Clippy, release build and the 25-symbol C-safe audit pass locally; Linux
+independent-install evidence comes from PR CI.
+
+### 历史：0.30.0 迁移 / Previous 0.30.0 migration
+
 候选 Git 模块 0.1.5 配对正式 Calcit 0.30.0；Rust 运算、C-safe 协议和现有
 Buffer/Number/String/Bool/List API 保持不变。23 个动态库返回边界使用现有
 `decode-map-as` 校验，不再只依赖返回 schema；错误形状会立即报错，不转换、
@@ -87,8 +129,8 @@ already a DBT value. `dbt:round` now requires an explicit precision.
 
 ## Development
 
-开发工具链使用 Rust 1.85+ 和正式 Calcit 0.30.0，不再固定旧 alpha。
-Development uses Rust 1.85+ and stable Calcit 0.30.0 rather than the previous alpha.
+开发工具链使用 Rust 1.85+ 和 Calcit 0.30.1-alpha.5（预发布）。
+Development uses Rust 1.85+ and Calcit 0.30.1-alpha.5 (prerelease).
 
 ```bash
 cargo fmt -- --check
@@ -98,7 +140,9 @@ cargo test --all-targets
 bash scripts/check-c-safe-ffi.sh
 caps --strict --ci
 calcit fix --workflow strict --verify --format edn
-calcit analyze quality
+calcit analyze weak-types --only coverage --summary-only --format json | jq -e '.data.summary.levels.none == 0 and .data.summary.levels.partial == 0'
+calcit analyze weak-types --only unsafe-coerce,schema-dynamic,unresolved-type-slot,code-dynamic,code-nil --summary-only --format json | jq -e '.data.summary.hits == 0'
+calcit analyze weak-types --only deprecated-call --summary-only --format json | jq -e '.data.summary.calls == 0'
 calcit analyze weak-types --only dynamic-method --summary-only --format json | jq -e '.data.summary.findings == 0'
 calcit --check-only --ns dbt.core --ns dbt.main --ns dbt.util --summary-only --format json
 calcit
@@ -126,11 +170,11 @@ CI retains the Rust tests, strict Clippy, 25-symbol C-safe audit and real dylib
 smoke, plus all 31 public definitions and zero-debt gates. This native-only
 binding has no frontend assets and needs no COS/CDN workflow or extra test scripts.
 
-原 `analyze quality` strict-zero 门禁暂时保留，不因入口弃用而删除零债务要求；
-已移除未被 CI 使用且记录旧债务的 baseline 文件。两个旧调用改为 `dbg` 和 `match`。
-The existing `analyze quality` strict-zero gate is retained despite its CLI
-deprecation; the unused historical debt baseline is removed. Deprecated calls
-now use `dbg` and `match`.
+原零债务要求由当前 `weak-types` 视图继续执行；历史迁移已移除未被 CI 使用的旧 baseline，
+并把两个兼容调用改为 `dbg` 和 `match`。本轮没有需要改写的旧调用或类型合同。
+Current `weak-types` views retain zero-debt enforcement. The earlier migration
+removed the unused baseline and replaced old calls with `dbg` and `match`;
+this round found no further legacy calls or type contracts to rewrite.
 
 ## License
 

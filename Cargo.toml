@@ -17,6 +17,6 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 calcit_native_ffi = "0.1.2"
-dual_balanced_ternary = { version = "0.2.0", path = "../dual_balanced_ternary.rs" }
+dual_balanced_ternary = "=0.2.0"
 cirru_edn = "0.8.0"
 # cirru_edn = { path = "/Users/chenyong/repo/cirru/edn.rs" }
