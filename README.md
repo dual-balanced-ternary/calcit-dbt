@@ -14,12 +14,12 @@ ownership locally.
 
 ## 使用者影响 / User impact
 
-模块 `0.1.5` 候选配对正式 Calcit **0.30.1**，不再依赖 alpha；发布状态以同名
+模块 `0.1.5` 候选配对正式 Calcit **0.31.0**，不再依赖 alpha；发布状态以同名
 Git tag 为准。调用方需同步 CLI 并先构建本平台动态库，不将 Linux CI 视为所有平台
 已有正式预编译 CLI 或均已验收。本模块仅支持 native，没有 JS runtime 或前端资源。
 Rust crate 仍为 `0.1.1`，数学实现、Snapshot、Buffer API 与原断言不变，不重复发布 crate。
 
-Candidate Git module `0.1.5` pairs with formal Calcit **0.30.1**, not an alpha;
+Candidate Git module `0.1.5` pairs with formal Calcit **0.31.0**, not an alpha;
 check the matching Git tag for publication. Update the CLI and build the platform
 dylib first. Linux CI does not certify every platform or promise prebuilt CLI assets.
 This is native-only, without a JS runtime or frontend assets. Rust crate `0.1.1`,
@@ -45,19 +45,25 @@ deprecated-call views without weakening its zero-debt requirements. The original
 dynamic-method gate remains. No new checker script, compiler rule or COS workflow
 is added.
 
-原匹配 alpha.5 图的完整 strict、31/31 类型覆盖与零债务门禁、33/33 全定义
-（含元数据）和真实新建 dylib smoke 已通过；这不是正式 0.30.1 的替代证据。
-正式候选交由干净 Linux CI 验证 Caps strict/toolchain、全部定义、完整 strict、
-原 Rust 六项集成测试、fmt、strict Clippy、release 构建、25 个 C-safe 导出与原入口断言。
-不运行本地 Caps，不安装/编译 Calcit，也不用 alpha CLI 编译正式候选。
+本轮使用正式 Calcit 0.31.0 核对现有源码：33/33 全定义（含元数据）、31/31 完整
+类型覆盖、完整 strict、五类弱类型命中、弃用调用及动态方法零债务门禁均通过。
+现有 Buffer 边界已满足新工具链要求，无需强行改写 Snapshot 或增加适配器。
+Rust fmt/test/strict Clippy、25 个 C-safe 导出审计与新构建 dylib 的原入口 smoke
+由原流程继续执行；Linux CI 结果与本地平台结果分别记录，不互相替代。
 
-The original matched alpha.5 graph passes strict, full31 coverage/zero-debt gates,
-all33 definitions including metadata, and smoke with a freshly built dylib. These
-are baseline evidence, not formal0.30.1 certification. Clean Linux CI checks the
-formal toolchain, all definitions, strict, the original six Rust integration tests,
-fmt, strict Clippy, release build, 25 C-safe exports and original entry assertions.
-No local Caps or Calcit installation/build is needed; alpha compilation is not
-used as evidence for the formal candidate.
+Formal Calcit 0.31.0 passes all33 definitions including metadata, full31 type
+coverage, complete strict, and the original zero-debt gates for weak types,
+deprecated calls and dynamic methods. Existing Buffer boundaries already meet
+the new toolchain requirements: no forced Snapshot rewrite or new adapter.
+The original Rust fmt/tests/strict Clippy, 25-symbol C-safe audit and entry smoke
+with a newly built dylib remain required. Linux CI and local platform evidence
+are reported separately rather than treated as interchangeable.
+
+本地 macOS 已通过原 6 项 Rust 集成测试、fmt、strict Clippy、release 构建、
+25 个 C-safe 导出审计及 Calcit 0.31.0 真实 dylib 入口断言。Linux 结果以本 PR CI 为准。
+The local macOS run passes the original six Rust integration tests, fmt, strict
+Clippy, release build, 25 C-safe exports and real dylib entry assertions with
+Calcit 0.31.0. See this PR's CI for Linux results.
 
 ### 已有类型与兼容合同 / Existing type and compatibility contracts
 
@@ -127,8 +133,8 @@ already a DBT value. `dbt:round` now requires an explicit precision.
 
 ## Development
 
-开发工具链使用 Rust 1.85+ 和正式 Calcit 0.30.1。
-Development uses Rust 1.85+ and formal Calcit 0.30.1.
+开发工具链使用 Rust 1.85+ 和正式 Calcit 0.31.0。
+Development uses Rust 1.85+ and formal Calcit 0.31.0.
 
 ```bash
 cargo fmt -- --check
