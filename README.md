@@ -14,16 +14,16 @@ ownership locally.
 
 ## 使用者影响 / User impact
 
-模块 `0.1.5` 候选配对正式 Calcit **0.31.0**，不再依赖 alpha；发布状态以同名
-Git tag 为准。调用方需同步 CLI 并先构建本平台动态库，不将 Linux CI 视为所有平台
+模块 `0.1.6` 候选配对正式 Calcit **0.32.0**，不再依赖 alpha；发布状态以同名
+Git tag 为准。新类型语法要求同步 CLI，调用方需先构建本平台动态库，不将 Linux CI 视为所有平台
 已有正式预编译 CLI 或均已验收。本模块仅支持 native，没有 JS runtime 或前端资源。
-Rust crate 仍为 `0.1.1`，数学实现、Snapshot、Buffer API 与原断言不变，不重复发布 crate。
+Rust crate 仍为 `0.1.1`，数学实现、Buffer API 与原断言不变，Snapshot 仅由官方 format 迁移类型表示，不重复发布 crate。
 
-Candidate Git module `0.1.5` pairs with formal Calcit **0.31.0**, not an alpha;
-check the matching Git tag for publication. Update the CLI and build the platform
+Candidate Git module `0.1.6` pairs with formal Calcit **0.32.0**, not an alpha;
+check the matching Git tag for publication. The new type syntax requires the matching CLI. Build the platform
 dylib first. Linux CI does not certify every platform or promise prebuilt CLI assets.
 This is native-only, without a JS runtime or frontend assets. Rust crate `0.1.1`,
-arithmetic, Snapshot, Buffer API and original assertions are unchanged; no crate republication.
+arithmetic, Buffer API and original assertions are unchanged; only type syntax is normalized by the official formatter. No crate republication.
 
 独立构建不再要求仓库外的 `../dual_balanced_ternary.rs`：改用精确的 crates.io 正式
 `dual_balanced_ternary =0.2.0`。已核对发布包的全部数学源码和测试与基线兄弟仓库一致，
@@ -45,25 +45,25 @@ deprecated-call views without weakening its zero-debt requirements. The original
 dynamic-method gate remains. No new checker script, compiler rule or COS workflow
 is added.
 
-本轮使用正式 Calcit 0.31.0 核对现有源码：33/33 全定义（含元数据）、31/31 完整
+本轮使用正式 Calcit 0.32.0 核对现有源码：33/33 全定义（含元数据）、31/31 完整
 类型覆盖、完整 strict、五类弱类型命中、弃用调用及动态方法零债务门禁均通过。
-现有 Buffer 边界已满足新工具链要求，无需强行改写 Snapshot 或增加适配器。
+31 个定义的完整官方 query 视图前后相同；仅存储的类型语法迁移，无需更改 Buffer 边界或增加适配器。
 Rust fmt/test/strict Clippy、25 个 C-safe 导出审计与新构建 dylib 的原入口 smoke
 由原流程继续执行；Linux CI 结果与本地平台结果分别记录，不互相替代。
 
-Formal Calcit 0.31.0 passes all33 definitions including metadata, full31 type
+Formal Calcit 0.32.0 passes all33 definitions including metadata, full31 type
 coverage, complete strict, and the original zero-debt gates for weak types,
 deprecated calls and dynamic methods. Existing Buffer boundaries already meet
-the new toolchain requirements: no forced Snapshot rewrite or new adapter.
+the new toolchain requirements. All 31 complete query views are unchanged; only stored type syntax is migrated, with no new adapter.
 The original Rust fmt/tests/strict Clippy, 25-symbol C-safe audit and entry smoke
 with a newly built dylib remain required. Linux CI and local platform evidence
 are reported separately rather than treated as interchangeable.
 
 本地 macOS 已通过原 6 项 Rust 集成测试、fmt、strict Clippy、release 构建、
-25 个 C-safe 导出审计及 Calcit 0.31.0 真实 dylib 入口断言。Linux 结果以本 PR CI 为准。
+25 个 C-safe 导出审计及 Calcit 0.32.0 真实 dylib 入口断言。Linux 结果以本 PR CI 为准。
 The local macOS run passes the original six Rust integration tests, fmt, strict
 Clippy, release build, 25 C-safe exports and real dylib entry assertions with
-Calcit 0.31.0. See this PR's CI for Linux results.
+Calcit 0.32.0. See this PR's CI for Linux results.
 
 ### 已有类型与兼容合同 / Existing type and compatibility contracts
 
@@ -133,8 +133,8 @@ already a DBT value. `dbt:round` now requires an explicit precision.
 
 ## Development
 
-开发工具链使用 Rust 1.85+ 和正式 Calcit 0.31.0。
-Development uses Rust 1.85+ and formal Calcit 0.31.0.
+开发工具链使用 Rust 1.85+ 和正式 Calcit 0.32.0。
+Development uses Rust 1.85+ and formal Calcit 0.32.0.
 
 ```bash
 cargo fmt -- --check
@@ -177,10 +177,10 @@ and zero-debt gates. Strict must pass with empty diagnostics. This native-only
 binding has no frontend assets and needs no COS/CDN workflow or extra test scripts.
 
 原零债务要求由当前 `weak-types` 视图继续执行；历史迁移已移除未被 CI 使用的旧 baseline，
-并把两个兼容调用改为 `dbg` 和 `match`。本轮没有需要改写的旧调用或类型合同。
+并把两个兼容调用改为 `dbg` 和 `match`。本轮只迁移类型标注表示，没有需要改写的旧调用或类型合同。
 Current `weak-types` views retain zero-debt enforcement. The earlier migration
 removed the unused baseline and replaced old calls with `dbg` and `match`;
-this round found no further legacy calls or type contracts to rewrite.
+this round migrates type syntax only, with no legacy calls or type contracts to rewrite.
 
 ## License
 
