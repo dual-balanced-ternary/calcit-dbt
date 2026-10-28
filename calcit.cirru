@@ -25,10 +25,8 @@
                 v $ if (starts-with? s |&) s $ str |& s
               quasiquote $ dbt:parse ~v
           :examples $ []
-          :schema $ :: 'Macro $ {}
-            :capabilities $ #{}
-            :expansion $ :: 'Expr 'Buffer
-            :required $ [] 'Syntax
+          :schema $ quote $ Macro Syntax
+            -> $ Expr Buffer
         'dbt:add $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:add (x y)
             decode-map-as
@@ -37,8 +35,7 @@
                 , |dbt_add x y
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Buffer 'Buffer
+          :schema $ quote $ Fn Buffer Buffer (-> Buffer)
         'dbt:conjugate $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:conjugate (x)
             decode-map-as
@@ -47,8 +44,7 @@
                 , |dbt_conjugate x
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Buffer
+          :schema $ quote $ Fn Buffer (-> Buffer)
         'dbt:div $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:div (x y)
             decode-map-as
@@ -57,8 +53,7 @@
                 , |dbt_div x y
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Buffer 'Buffer
+          :schema $ quote $ Fn Buffer Buffer (-> Buffer)
         'dbt:equal $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:equal (x y)
             decode-map-as
@@ -67,8 +62,7 @@
                 , |dbt_equal x y
               , 'Bool
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Bool)
-            :args $ [] 'Buffer 'Buffer
+          :schema $ quote $ Fn Buffer Buffer (-> Bool)
         'dbt:f9-add $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:f9-add (x y)
             decode-map-as
@@ -77,8 +71,7 @@
                 , |dbt_f9_add x y
               , 'Number
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Number)
-            :args $ [] 'Number 'Number
+          :schema $ quote $ Fn Number Number (-> Number)
         'dbt:f9-inverse $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:f9-inverse (x)
             decode-map-as
@@ -87,8 +80,7 @@
                 , |dbt_f9_inverse x
               , 'Number
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Number)
-            :args $ [] 'Number
+          :schema $ quote $ Fn Number (-> Number)
         'dbt:f9-mul $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:f9-mul (x y)
             decode-map-as
@@ -97,8 +89,7 @@
                 , |dbt_f9_mul x y
               , 'Number
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Number)
-            :args $ [] 'Number 'Number
+          :schema $ quote $ Fn Number Number (-> Number)
         'dbt:f9-norm $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:f9-norm (x)
             decode-map-as
@@ -107,8 +98,7 @@
                 , |dbt_f9_norm x
               , 'Number
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Number)
-            :args $ [] 'Number
+          :schema $ quote $ Fn Number (-> Number)
         'dbt:f9-pow $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:f9-pow (x exponent)
             decode-map-as
@@ -117,8 +107,7 @@
                 , |dbt_f9_pow x exponent
               , 'Number
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Number)
-            :args $ [] 'Number 'Number
+          :schema $ quote $ Fn Number Number (-> Number)
         'dbt:f9-trace $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:f9-trace (x)
             decode-map-as
@@ -127,8 +116,7 @@
                 , |dbt_f9_trace x
               , 'Number
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Number)
-            :args $ [] 'Number
+          :schema $ quote $ Fn Number (-> Number)
         'dbt:format $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:format (x)
             decode-map-as
@@ -137,8 +125,7 @@
                 , |dbt_format x
               , 'String
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'String)
-            :args $ [] 'Buffer
+          :schema $ quote $ Fn Buffer (-> String)
         'dbt:from-digit $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:from-digit (x)
             decode-map-as
@@ -147,8 +134,7 @@
                 , |dbt_from_digit x
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Number
+          :schema $ quote $ Fn Number (-> Buffer)
         'dbt:from-float $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:from-float (x y)
             decode-map-as
@@ -157,8 +143,7 @@
                 , |dbt_from_float x y
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Number 'Number
+          :schema $ quote $ Fn Number Number (-> Buffer)
         'dbt:move-by $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:move-by (x places)
             decode-map-as
@@ -167,8 +152,7 @@
                 , |dbt_move_by x places
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Buffer 'Number
+          :schema $ quote $ Fn Buffer Number (-> Buffer)
         'dbt:mul $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:mul (x y)
             decode-map-as
@@ -177,8 +161,7 @@
                 , |dbt_mul x y
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Buffer 'Buffer
+          :schema $ quote $ Fn Buffer Buffer (-> Buffer)
         'dbt:norm $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:norm (x)
             decode-map-as
@@ -187,8 +170,7 @@
                 , |dbt_norm x
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Buffer
+          :schema $ quote $ Fn Buffer (-> Buffer)
         'dbt:parse $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:parse (s)
             decode-map-as
@@ -197,8 +179,7 @@
                 , |dbt_parse s
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'String
+          :schema $ quote $ Fn String (-> Buffer)
         'dbt:pow $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:pow (x exponent)
             decode-map-as
@@ -207,8 +188,7 @@
                 , |dbt_pow x exponent
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Buffer 'Number
+          :schema $ quote $ Fn Buffer Number (-> Buffer)
         'dbt:round $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:round (x n)
             decode-map-as
@@ -217,8 +197,7 @@
                 , |dbt_round x n
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Buffer 'Number
+          :schema $ quote $ Fn Buffer Number (-> Buffer)
         'dbt:sub $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:sub (x y)
             decode-map-as
@@ -227,8 +206,7 @@
                 , |dbt_sub x y
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Buffer 'Buffer
+          :schema $ quote $ Fn Buffer Buffer (-> Buffer)
         'dbt:to-buffer $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:to-buffer (x)
             decode-map-as
@@ -237,8 +215,7 @@
                 , |dbt_to_buffer x
               , 'Buffer
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Buffer)
-            :args $ [] 'Buffer
+          :schema $ quote $ Fn Buffer (-> Buffer)
         'dbt:to-digits $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:to-digits (x)
             decode-map-as
@@ -247,9 +224,8 @@
                 , |dbt_to_digits x
               :: 'List $ :: 'List 'Number
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ [] 'Buffer
-            :return $ :: 'List $ :: 'List 'Number
+          :schema $ quote $ Fn Buffer
+            -> $ List $ List Number
         'dbt:to-float $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dbt:to-float (x)
             decode-map-as
@@ -258,13 +234,12 @@
                 , |dbt_to_float x
               :: 'List 'Number
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ [] 'Buffer
-            :return $ :: 'List 'Number
+          :schema $ quote $ Fn Buffer
+            -> $ List Number
         'lib-path $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def lib-path |/dylibs/libcalcit_dbt
           :examples $ []
-          :schema $ :: 'String
+          :schema $ quote String
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns dbt.core
           :require
@@ -280,10 +255,8 @@
                 not $ dbt:equal ~a ~b
                 raise $ ~ $ str-spaced |failed (format-to-lisp a) "|to match" (format-to-lisp b)
           :examples $ []
-          :schema $ :: 'Macro $ {}
-            :capabilities $ #{}
-            :expansion $ :: 'Expr 'Unit
-            :required $ [] (:: 'Expr 'Buffer) (:: 'Expr 'Buffer)
+          :schema $ quote $ Macro (Expr Buffer) (Expr Buffer)
+            -> $ Expr Unit
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             println $ dbt:format $ dbg (dbt 13.23)
@@ -295,13 +268,11 @@
             assert= (dbt 8) (dbt:from-digit 8)
             run-tests
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
         'reload! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn reload! () (println "|Reloaded dbt") &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
         'run-tests $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn run-tests () (println "|run tests")
             assert= (dbt 1) (dbt 1)
@@ -364,8 +335,7 @@
             println "|Passed test."
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns dbt.main
           :require $ dbt.core :refer $ dbt dbt:format dbt:add dbt:sub dbt:div dbt:mul dbt:round dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit dbt:equal
@@ -375,15 +345,13 @@
           :code $ quote $ defmacro get-dylib-ext ()
             match (&get-os) (:macos |.dylib) (:windows |.dll) (_ |.so)
           :examples $ []
-          :schema $ :: 'Macro $ {}
-            :capabilities $ #{} :platform-read
-            :expansion $ :: 'Expr 'String
-            :required $ []
+          :schema $ quote $ Macro
+            -> $ Expr String
+            :capabilities :platform-read
         'or-current-path $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn or-current-path (p)
             if (blank? p) |. p
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'String)
-            :args $ [] 'String
+          :schema $ quote $ Fn String (-> String)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns dbt.util
