@@ -14,16 +14,16 @@ ownership locally.
 
 ## 使用者影响 / User impact
 
-模块 `0.1.6` 候选配对正式 Calcit **0.32.0**，不再依赖 alpha；发布状态以同名
+模块 `0.1.7` 候选配对正式 Calcit **0.32.1**，不再依赖 alpha；发布状态以同名
 Git tag 为准。新类型语法要求同步 CLI，调用方需先构建本平台动态库，不将 Linux CI 视为所有平台
 已有正式预编译 CLI 或均已验收。本模块仅支持 native，没有 JS runtime 或前端资源。
-Rust crate 仍为 `0.1.1`，数学实现、Buffer API 与原断言不变，Snapshot 仅由官方 format 迁移类型表示，不重复发布 crate。
+Rust crate 仍为 `0.1.1`，数学实现、Buffer API 与原断言不变，Snapshot 已使用当前类型表示，官方 formatter 无需改写；本轮不重复发布 crate。
 
-Candidate Git module `0.1.6` pairs with formal Calcit **0.32.0**, not an alpha;
+Candidate Git module `0.1.7` pairs with formal Calcit **0.32.1**, not an alpha;
 check the matching Git tag for publication. The new type syntax requires the matching CLI. Build the platform
 dylib first. Linux CI does not certify every platform or promise prebuilt CLI assets.
 This is native-only, without a JS runtime or frontend assets. Rust crate `0.1.1`,
-arithmetic, Buffer API and original assertions are unchanged; only type syntax is normalized by the official formatter. No crate republication.
+arithmetic, Buffer API and original assertions are unchanged; the Snapshot already uses current type syntax and needs no formatter rewrite. No crate republication.
 
 独立构建不再要求仓库外的 `../dual_balanced_ternary.rs`：改用精确的 crates.io 正式
 `dual_balanced_ternary =0.2.0`。已核对发布包的全部数学源码和测试与基线兄弟仓库一致，
@@ -45,25 +45,25 @@ deprecated-call views without weakening its zero-debt requirements. The original
 dynamic-method gate remains. No new checker script, compiler rule or COS workflow
 is added.
 
-本轮使用正式 Calcit 0.32.0 核对现有源码：33/33 全定义（含元数据）、31/31 完整
+本轮使用正式 Calcit 0.32.1 核对现有源码：33/33 全定义（含元数据）、31/31 完整
 类型覆盖、完整 strict、五类弱类型命中、弃用调用及动态方法零债务门禁均通过。
-31 个定义的完整官方 query 视图前后相同；仅存储的类型语法迁移，无需更改 Buffer 边界或增加适配器。
+31 个定义的完整官方 query 视图前后相同；Snapshot 字节不变，无需更改 Buffer 边界或增加适配器。
 Rust fmt/test/strict Clippy、25 个 C-safe 导出审计与新构建 dylib 的原入口 smoke
 由原流程继续执行；Linux CI 结果与本地平台结果分别记录，不互相替代。
 
-Formal Calcit 0.32.0 passes all33 definitions including metadata, full31 type
+Formal Calcit 0.32.1 passes all33 definitions including metadata, full31 type
 coverage, complete strict, and the original zero-debt gates for weak types,
 deprecated calls and dynamic methods. Existing Buffer boundaries already meet
-the new toolchain requirements. All 31 complete query views are unchanged; only stored type syntax is migrated, with no new adapter.
+the new toolchain requirements. All 31 complete query views and the Snapshot bytes are unchanged, with no new adapter.
 The original Rust fmt/tests/strict Clippy, 25-symbol C-safe audit and entry smoke
 with a newly built dylib remain required. Linux CI and local platform evidence
 are reported separately rather than treated as interchangeable.
 
 本地 macOS 已通过原 6 项 Rust 集成测试、fmt、strict Clippy、release 构建、
-25 个 C-safe 导出审计及 Calcit 0.32.0 真实 dylib 入口断言。Linux 结果以本 PR CI 为准。
+25 个 C-safe 导出审计及 Calcit 0.32.1 真实 dylib 入口断言。Linux 结果以本 PR CI 为准。
 The local macOS run passes the original six Rust integration tests, fmt, strict
 Clippy, release build, 25 C-safe exports and real dylib entry assertions with
-Calcit 0.32.0. See this PR's CI for Linux results.
+Calcit 0.32.1. See this PR's CI for Linux results.
 
 ### 已有类型与兼容合同 / Existing type and compatibility contracts
 
@@ -85,38 +85,57 @@ Do not force source rewrites where existing contracts pass, or add casts, budget
 ## API
 
 ```cirru
-ns app.main $ :require
-  dbt.core :refer $ dbt dbt:format dbt:round dbt:add dbt:sub dbt:mul dbt:div dbt:conjugate dbt:norm dbt:pow dbt:move-by dbt:f9-add dbt:f9-mul dbt:f9-inverse dbt:f9-pow dbt:f9-trace dbt:f9-norm dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit dbt:equal
+ns app.main $ :require $ dbt.core :refer
+  dbt dbt:format dbt:round dbt:add dbt:sub dbt:mul dbt:div dbt:conjugate dbt:norm dbt:pow dbt:move-by dbt:f9-add dbt:f9-mul dbt:f9-inverse dbt:f9-pow dbt:f9-trace dbt:f9-norm dbt:to-float dbt:from-float dbt:to-digits dbt:from-digit dbt:equal
 
 dbt 1.2
 
 dbt:format $ dbt 1.2
+
 ; precision is explicit
+
 dbt:round (dbt 1.234) 2
 
 dbt:add (dbt 1.2) (dbt 3.4)
+
 dbt:sub (dbt 1.2) (dbt 3.4)
+
 dbt:mul (dbt 1.2) (dbt 3.4)
+
 dbt:div (dbt 1.2) (dbt 3.4)
+
 dbt:conjugate $ dbt 8
+
 dbt:norm $ dbt 8
+
 dbt:pow (dbt 8) 4
+
 dbt:move-by (dbt 1.2) 2
 
 ; carry-free arithmetic in F9, using digit numbers 1 through 9
+
 dbt:f9-add 8 8
+
 dbt:f9-mul 8 8
+
 dbt:f9-inverse 8
+
 dbt:f9-pow 8 8
+
 dbt:f9-trace 8
+
 dbt:f9-norm 8
 
 dbt:to-float $ dbt 12.34
+
 dbt:from-float 4 4
+
 dbt:to-digits $ dbt 12.34
+
 dbt:from-digit 8
 
 ; lossless transport through Cirru EDN Buffer
+
 dbt.core/dbt:to-buffer $ dbt 12.34
 
 dbt:equal (dbt 1) (dbt 1)
@@ -133,8 +152,8 @@ already a DBT value. `dbt:round` now requires an explicit precision.
 
 ## Development
 
-开发工具链使用 Rust 1.85+ 和正式 Calcit 0.32.0。
-Development uses Rust 1.85+ and formal Calcit 0.32.0.
+开发工具链使用 Rust 1.85+ 和正式 Calcit 0.32.1。
+Development uses Rust 1.85+ and formal Calcit 0.32.1.
 
 ```bash
 cargo fmt -- --check
@@ -153,7 +172,7 @@ calcit analyze weak-types --only dynamic-method --summary-only --format json | j
 calcit
 ```
 
-`calcit.cirru` is the canonical machine-generated snapshot. Modify it with
+`calcit.cirru` is the canonical structured source Snapshot. Modify it with
 `calcit edit`/`calcit tree`, not a text editor.
 
 `dbt` 宏先区分标量语法再转换文本，保留 Number、String、Symbol、Tag、Bool、Nil
@@ -177,10 +196,14 @@ and zero-debt gates. Strict must pass with empty diagnostics. This native-only
 binding has no frontend assets and needs no COS/CDN workflow or extra test scripts.
 
 原零债务要求由当前 `weak-types` 视图继续执行；历史迁移已移除未被 CI 使用的旧 baseline，
-并把两个兼容调用改为 `dbg` 和 `match`。本轮只迁移类型标注表示，没有需要改写的旧调用或类型合同。
+并把两个兼容调用改为 `dbg` 和 `match`。本轮只更新工具链配对与候选版本，没有需要改写的旧调用、类型合同或存储类型表示。
 Current `weak-types` views retain zero-debt enforcement. The earlier migration
 removed the unused baseline and replaced old calls with `dbg` and `match`;
-this round migrates type syntax only, with no legacy calls or type contracts to rewrite.
+this round updates the toolchain pairing and candidate version only, with no legacy calls, type contracts or stored type syntax to rewrite.
+
+CI 的三个 Action 引用改为与原已审查提交对应的精确正式 tag，已远端解引用核对；按既定维护策略接受 tag 可移动风险。原权限、checkout 子目录、Rust stable 通道、测试和原生门禁保持，不增加安全忽略配置。本轮不合并、不创建 Git tag/Release，不发布 crates.io/npm。
+
+Three Action references use exact formal tags verified against the original reviewed commits. This intentionally accepts mutable-tag risk; permissions, checkout subdirectory, Rust stable channel and all gates remain. No security ignore configuration, merge, Git tag/Release, crates.io or npm publication is included.
 
 ## License
 
