@@ -17,7 +17,7 @@ jobs:
       run:
         working-directory: calcit-dbt
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@v6.1.0
         with:
           path: calcit-dbt
           persist-credentials: false
@@ -26,11 +26,11 @@ jobs:
         with:
           components: clippy, rustfmt
 
-      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
+      - uses: Swatinem/rust-cache@v2.9.2
         with:
           workspaces: calcit-dbt
 
-      - uses: calcit-lang/setup-calcit@ca701be5a471759e442aa053cd100720bbe1f09f # v1.5.0
+      - uses: calcit-lang/setup-calcit@v1.5.0
         with:
           deps-file: calcit-dbt/deps.cirru
           tools: calcit,caps
