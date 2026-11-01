@@ -14,16 +14,16 @@ ownership locally.
 
 ## 使用者影响 / User impact
 
-模块 `0.1.7` 候选配对正式 Calcit **0.32.1**，不再依赖 alpha；发布状态以同名
+模块 `0.1.7` 候选配对正式 Calcit **0.34.0**，不再依赖 alpha；发布状态以同名
 Git tag 为准。新类型语法要求同步 CLI，调用方需先构建本平台动态库，不将 Linux CI 视为所有平台
 已有正式预编译 CLI 或均已验收。本模块仅支持 native，没有 JS runtime 或前端资源。
-Rust crate 仍为 `0.1.1`，数学实现、Buffer API 与原断言不变，Snapshot 已使用当前类型表示，官方 formatter 无需改写；本轮不重复发布 crate。
+Rust crate 仍为 `0.1.1`，数学实现、Buffer API 与原断言不变，本次由官方 formatter 规范两个列表解码目标的类型写法，运行代码其余部分与元数据保留；本轮不重复发布 crate。
 
-Candidate Git module `0.1.7` pairs with formal Calcit **0.32.1**, not an alpha;
+Candidate Git module `0.1.7` pairs with formal Calcit **0.34.0**, not an alpha;
 check the matching Git tag for publication. The new type syntax requires the matching CLI. Build the platform
 dylib first. Linux CI does not certify every platform or promise prebuilt CLI assets.
 This is native-only, without a JS runtime or frontend assets. Rust crate `0.1.1`,
-arithmetic, Buffer API and original assertions are unchanged; the Snapshot already uses current type syntax and needs no formatter rewrite. No crate republication.
+arithmetic, Buffer API and original assertions are unchanged; the official formatter only normalizes two list decoder target type forms, preserving other runtime code and metadata. No crate republication.
 
 独立构建不再要求仓库外的 `../dual_balanced_ternary.rs`：改用精确的 crates.io 正式
 `dual_balanced_ternary =0.2.0`。已核对发布包的全部数学源码和测试与基线兄弟仓库一致，
@@ -45,25 +45,25 @@ deprecated-call views without weakening its zero-debt requirements. The original
 dynamic-method gate remains. No new checker script, compiler rule or COS workflow
 is added.
 
-本轮使用正式 Calcit 0.32.1 核对现有源码：33/33 全定义（含元数据）、31/31 完整
+本轮使用正式 Calcit 0.34.0 核对现有源码：33/33 全定义（含元数据）、31/31 完整
 类型覆盖、完整 strict、五类弱类型命中、弃用调用及动态方法零债务门禁均通过。
-31 个定义的完整官方 query 视图前后相同；Snapshot 字节不变，无需更改 Buffer 边界或增加适配器。
+31 个 authored 定义中，29 个官方完整视图不变，另两个仅规范解码目标类型写法；全部元数据保持，无需更改 Buffer 边界或增加适配器。
 Rust fmt/test/strict Clippy、25 个 C-safe 导出审计与新构建 dylib 的原入口 smoke
 由原流程继续执行；Linux CI 结果与本地平台结果分别记录，不互相替代。
 
-Formal Calcit 0.32.1 passes all33 definitions including metadata, full31 type
+Formal Calcit 0.34.0 passes all33 definitions including metadata, full31 type
 coverage, complete strict, and the original zero-debt gates for weak types,
 deprecated calls and dynamic methods. Existing Buffer boundaries already meet
-the new toolchain requirements. All 31 complete query views and the Snapshot bytes are unchanged, with no new adapter.
+the new toolchain requirements. Official views preserve 29 of 31 authored definitions exactly; two only normalize decoder type syntax, with complete metadata preserved and no new adapter.
 The original Rust fmt/tests/strict Clippy, 25-symbol C-safe audit and entry smoke
 with a newly built dylib remain required. Linux CI and local platform evidence
 are reported separately rather than treated as interchangeable.
 
 本地 macOS 已通过原 6 项 Rust 集成测试、fmt、strict Clippy、release 构建、
-25 个 C-safe 导出审计及 Calcit 0.32.1 真实 dylib 入口断言。Linux 结果以本 PR CI 为准。
+25 个 C-safe 导出审计及 Calcit 0.34.0 真实 dylib 入口断言。Linux 结果以本 PR CI 为准。
 The local macOS run passes the original six Rust integration tests, fmt, strict
 Clippy, release build, 25 C-safe exports and real dylib entry assertions with
-Calcit 0.32.1. See this PR's CI for Linux results.
+Calcit 0.34.0. See this PR's CI for Linux results.
 
 ### 已有类型与兼容合同 / Existing type and compatibility contracts
 
@@ -152,8 +152,8 @@ already a DBT value. `dbt:round` now requires an explicit precision.
 
 ## Development
 
-开发工具链使用 Rust 1.85+ 和正式 Calcit 0.32.1。
-Development uses Rust 1.85+ and formal Calcit 0.32.1.
+开发工具链使用 Rust 1.85+ 和正式 Calcit 0.34.0。
+Development uses Rust 1.85+ and formal Calcit 0.34.0.
 
 ```bash
 cargo fmt -- --check
