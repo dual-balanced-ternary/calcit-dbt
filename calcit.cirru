@@ -222,7 +222,7 @@
               &call-dylib-edn
                 str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
                 , |dbt_to_digits x
-              :: 'List $ :: 'List 'Number
+              quote $ List $ List Number
           :examples $ []
           :schema $ quote $ Fn Buffer
             -> $ List $ List Number
@@ -232,7 +232,7 @@
               &call-dylib-edn
                 str (or-current-path calcit-dirname) lib-path $ get-dylib-ext
                 , |dbt_to_float x
-              :: 'List 'Number
+              quote $ List Number
           :examples $ []
           :schema $ quote $ Fn Buffer
             -> $ List Number
