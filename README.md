@@ -14,11 +14,11 @@ ownership locally.
 
 ## 使用者影响 / User impact
 
-候选模块 `0.1.9` 配对正式 Calcit **0.41.1**。使用时先构建本平台的动态库，
+候选模块 `0.1.9` 配对正式 Calcit **0.42.1**。使用时先构建本平台的动态库，
 再使用现有 Buffer API。当前 Snapshot 已符合官方格式。
 Rust crate 仍为 `0.1.1`，C-safe ABI 和数学结果保持兼容。
 
-Module candidate `0.1.9` targets Calcit **0.41.1**. Build the dylib for your platform
+Module candidate `0.1.9` targets Calcit **0.42.1**. Build the dylib for your platform
 before using the existing Buffer API. The current Snapshot already follows the canonical format. Rust crate `0.1.1` keeps the same C-safe ABI and
 arithmetic results.
 
@@ -42,11 +42,11 @@ deprecated-call views without weakening its zero-debt requirements. The original
 dynamic-method gate remains. No new checker script, compiler rule or COS workflow
 is added.
 
-Calcit 0.41.1 通过全部 33 个定义、31 个用户定义的完整类型覆盖、strict
+Calcit 0.42.1 通过全部 33 个定义、31 个用户定义的完整类型覆盖、strict
 及原零债务门禁。本地 macOS 通过 6 项 Rust 集成测试、25 个 C-safe 导出审计、
 release 构建及真实 dylib 入口断言。Linux 由原 CI 验证。
 
-Calcit 0.41.1 passes all 33 definitions, full type coverage for all 31 authored
+Calcit 0.42.1 passes all 33 definitions, full type coverage for all 31 authored
 definitions, strict verification, and the existing zero-debt gates. Local macOS
 passes six Rust integration tests, the 25-symbol C-safe audit, a release build,
 and the entry smoke test against the new dylib. The existing CI verifies Linux.
@@ -138,8 +138,8 @@ already a DBT value. `dbt:round` now requires an explicit precision.
 
 ## Development
 
-开发工具链使用 Rust 1.85+ 和正式 Calcit 0.41.1。
-Development uses Rust 1.85+ and formal Calcit 0.41.1.
+开发工具链使用 Rust 1.85+ 和正式 Calcit 0.42.1。
+Development uses Rust 1.85+ and formal Calcit 0.42.1.
 
 ```bash
 cargo fmt -- --check
