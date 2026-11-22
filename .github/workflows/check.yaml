@@ -42,7 +42,7 @@ jobs:
 
       - run: cargo test --all-targets
 
-      - run: ./build.sh
+      - run: sh ./build.sh
 
       - run: bash scripts/check-c-safe-ffi.sh
 
