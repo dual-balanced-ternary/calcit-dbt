@@ -14,11 +14,11 @@ ownership locally.
 
 ## 使用者影响 / User impact
 
-候选模块 `0.1.9` 配对正式 Calcit **0.44.0**。使用时先构建本平台的动态库，
+候选模块 `0.1.10` 配对正式 Calcit **0.44.0**。使用时先构建本平台的动态库，
 再使用现有 Buffer API。当前 Snapshot 已符合官方格式。
 Rust crate 仍为 `0.1.1`，C-safe ABI 和数学结果保持兼容。
 
-Module candidate `0.1.9` targets Calcit **0.44.0**. Build the dylib for your platform
+Module candidate `0.1.10` targets Calcit **0.44.0**. Build the dylib for your platform
 before using the existing Buffer API. The current Snapshot already follows the canonical format. Rust crate `0.1.1` keeps the same C-safe ABI and
 arithmetic results.
 
