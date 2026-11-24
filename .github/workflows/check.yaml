@@ -30,11 +30,11 @@ jobs:
         with:
           workspaces: calcit-dbt
 
-      - uses: calcit-lang/setup-calcit@v1.5.0
+      - uses: calcit-lang/setup-calcit@v1.5.2
         with:
           deps-file: calcit-dbt/deps.cirru
           tools: calcit,caps
-          caps-version: "0.1.1"
+          caps-version: "0.1.2"
 
       - run: cargo fmt -- --check
 
